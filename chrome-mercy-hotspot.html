@@ -11,23 +11,20 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:           #0d1210;
-    --bg-elevated:  #131a16;
-    --bg-panel:     #111a14;
-    --accent:       #C4975A;
-    --accent-light: #d4aa72;
-    --accent-dim:   rgba(196,151,90,0.18);
-    --accent-border:rgba(196,151,90,0.22);
-    --green-deep:   #1a2e22;
-    --green-mid:    #243d2e;
-    --text-white:   #ffffff;
-    --text-primary: #f0ece6;
+    --bg:            #0d1210;
+    --bg-panel:      #111a14;
+    --green-deep:    #1a2e22;
+    --accent:        #C4975A;
+    --accent-light:  #d4aa72;
+    --accent-border: rgba(196,151,90,0.22);
+    --text-white:    #ffffff;
+    --text-primary:  #f0ece6;
     --text-secondary:#b8b0a4;
-    --text-muted:   #5c5850;
-    --border:       rgba(196,151,90,0.15);
-    --border-strong:rgba(196,151,90,0.3);
-    --font-heading: 'Cormorant Garamond', serif;
-    --font-body:    'Inter', sans-serif;
+    --text-muted:    #5c5850;
+    --border:        rgba(196,151,90,0.15);
+    --border-strong: rgba(196,151,90,0.3);
+    --font-heading:  'Cormorant Garamond', serif;
+    --font-body:     'Inter', sans-serif;
   }
 
   html, body {
@@ -45,11 +42,8 @@
     padding: 44px 24px 64px;
   }
 
-  /* ── Header ── */
-  .cm-header {
-    text-align: center;
-    margin-bottom: 32px;
-  }
+  /* Header */
+  .cm-header { text-align: center; margin-bottom: 32px; }
   .cm-header__eyebrow {
     font-family: var(--font-body);
     font-weight: 300;
@@ -77,41 +71,28 @@
     text-transform: uppercase;
   }
 
-  /* ── Divider ── */
-  .cm-divider {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 28px;
-  }
+  /* Divider */
+  .cm-divider { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
   .cm-divider__line { flex: 1; height: 1px; background: var(--border); }
-  .cm-divider__mark {
-    width: 5px; height: 5px;
-    background: var(--accent);
-    transform: rotate(45deg);
-    flex-shrink: 0;
-  }
+  .cm-divider__mark { width: 5px; height: 5px; background: var(--accent); transform: rotate(45deg); flex-shrink: 0; }
 
-  /* ── Nav ── */
+  /* Nav */
   .cm-nav {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 0;
     border-bottom: 1px solid var(--border);
-    margin-bottom: 0;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
   .cm-nav::-webkit-scrollbar { display: none; }
-
   .cm-nav__btn {
     background: none;
     border: none;
     border-bottom: 2px solid transparent;
     margin-bottom: -1px;
-    padding: 12px 22px;
+    padding: 12px 20px;
     cursor: pointer;
     font-family: var(--font-body);
     font-weight: 400;
@@ -120,25 +101,48 @@
     text-transform: uppercase;
     color: var(--text-muted);
     white-space: nowrap;
-    transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    transition: color 0.3s ease, border-color 0.3s ease;
     flex-shrink: 0;
   }
-  .cm-nav__btn:hover {
-    color: var(--text-secondary);
-    background: rgba(196,151,90,0.04);
+  .cm-nav__btn:hover { color: var(--text-secondary); }
+  .cm-nav__btn.active { color: var(--accent-light); border-bottom-color: var(--accent); }
+
+  /* Back bar — shown on close-up shots */
+  .cm-back-bar {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    background: var(--green-deep);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.3s ease;
   }
-  .cm-nav__btn.active {
+  .cm-back-bar:hover { background: #213829; }
+  .cm-back-bar.visible { display: flex; }
+  .cm-back-bar__arrow {
+    font-size: 12px;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .cm-back-bar__label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+  .cm-back-bar__from {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-style: italic;
     color: var(--accent-light);
-    border-bottom-color: var(--accent);
+    margin-left: 4px;
   }
 
-  /* ── Viewer ── */
-  .cm-viewer {
-    position: relative;
-    background: #060a07;
-    overflow: hidden;
-    line-height: 0;
-  }
+  /* Viewer */
+  .cm-viewer { position: relative; background: #060a07; overflow: hidden; line-height: 0; }
   .cm-viewer__img {
     width: 100%;
     display: block;
@@ -147,7 +151,7 @@
   }
   .cm-viewer__img.loaded { opacity: 1; }
 
-  /* ── Hotspots ── */
+  /* Hotspot — info type (numbered) */
   .cm-hotspot {
     position: absolute;
     transform: translate(-50%, -50%);
@@ -156,9 +160,7 @@
     cursor: pointer;
     z-index: 10;
   }
-  @media (max-width: 600px) {
-    .cm-hotspot { width: 42px; height: 42px; }
-  }
+  @media (max-width: 600px) { .cm-hotspot { width: 42px; height: 42px; } }
 
   .cm-hotspot__pulse {
     position: absolute;
@@ -184,19 +186,34 @@
     transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 2px 10px rgba(196,151,90,0.4);
   }
-  .cm-hotspot__core:hover {
-    background: var(--accent-light);
-    transform: scale(1.1);
-  }
+  .cm-hotspot__core:hover { background: var(--accent-light); transform: scale(1.1); }
   .cm-hotspot.active .cm-hotspot__core {
-    background: #ffffff;
+    background: #fff;
     color: #0d1210;
     transform: scale(1.15);
     box-shadow: 0 2px 20px rgba(255,255,255,0.25);
   }
-  .cm-hotspot.active .cm-hotspot__pulse {
-    border-color: rgba(255,255,255,0.25);
-    animation: none;
+  .cm-hotspot.active .cm-hotspot__pulse { border-color: rgba(255,255,255,0.2); animation: none; }
+
+  /* Hotspot — navigate type (arrow icon, white ring) */
+  .cm-hotspot.nav-type .cm-hotspot__pulse {
+    border-color: rgba(255,255,255,0.4);
+  }
+  .cm-hotspot.nav-type .cm-hotspot__core {
+    background: rgba(20,30,22,0.85);
+    color: var(--accent-light);
+    font-size: 13px;
+    border: 1px solid var(--accent);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  }
+  .cm-hotspot.nav-type .cm-hotspot__core:hover {
+    background: var(--accent);
+    color: #0d1210;
+    transform: scale(1.1);
+  }
+  .cm-hotspot.nav-type.active .cm-hotspot__core {
+    background: var(--accent);
+    color: #0d1210;
   }
 
   @keyframes hs-pulse {
@@ -204,7 +221,7 @@
     60%       { transform: scale(1.55); opacity: 0; }
   }
 
-  /* ── Info Panel ── */
+  /* Info Panel */
   .cm-panel {
     background: var(--green-deep);
     border: 1px solid var(--border-strong);
@@ -214,21 +231,16 @@
     opacity: 0;
     transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
   }
-  .cm-panel.open {
-    max-height: 340px;
-    opacity: 1;
-  }
+  .cm-panel.open { max-height: 360px; opacity: 1; }
 
   .cm-panel__inner {
-    padding: 28px 32px;
+    padding: 26px 32px;
     display: flex;
     gap: 28px;
     align-items: flex-start;
     border-left: 3px solid var(--accent);
   }
-  @media (max-width: 600px) {
-    .cm-panel__inner { padding: 20px 18px; gap: 0; flex-direction: column; }
-  }
+  @media (max-width: 600px) { .cm-panel__inner { padding: 20px 18px; gap: 0; flex-direction: column; } }
 
   .cm-panel__num {
     font-family: var(--font-heading);
@@ -240,9 +252,7 @@
     letter-spacing: -0.02em;
     min-width: 52px;
   }
-  @media (max-width: 600px) {
-    .cm-panel__num { font-size: 38px; margin-bottom: 10px; }
-  }
+  @media (max-width: 600px) { .cm-panel__num { font-size: 38px; margin-bottom: 10px; } }
 
   .cm-panel__body { flex: 1; min-width: 0; }
 
@@ -251,7 +261,6 @@
     font-size: clamp(20px, 2.5vw, 28px);
     font-weight: 400;
     font-style: italic;
-    letter-spacing: 0.03em;
     color: var(--text-white);
     margin-bottom: 10px;
     line-height: 1.2;
@@ -263,12 +272,38 @@
     line-height: 1.85;
     color: var(--text-secondary);
     max-width: 680px;
+    margin-bottom: 0;
   }
+
+  /* View close-up link inside panel */
+  .cm-panel__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 8px 16px;
+    background: none;
+    border: 1px solid var(--border-strong);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+  .cm-panel__cta:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0d1210;
+  }
+  .cm-panel__cta__arrow { font-size: 12px; transition: transform 0.3s ease; }
+  .cm-panel__cta:hover .cm-panel__cta__arrow { transform: translateX(3px); }
 
   .cm-panel__close {
     background: none;
     border: 1px solid var(--border);
-    border-radius: 0;
     cursor: pointer;
     color: var(--text-muted);
     font-size: 11px;
@@ -277,14 +312,10 @@
     line-height: 1;
     transition: color 0.3s ease, border-color 0.3s ease;
     align-self: flex-start;
-    letter-spacing: 0.05em;
   }
-  .cm-panel__close:hover {
-    color: var(--accent);
-    border-color: var(--accent-border);
-  }
+  .cm-panel__close:hover { color: var(--accent); border-color: var(--accent-border); }
 
-  /* ── Footer hint ── */
+  /* Hint */
   .cm-hint {
     margin-top: 20px;
     text-align: center;
@@ -294,10 +325,10 @@
     text-transform: uppercase;
     color: var(--text-muted);
   }
+  .cm-hint.nav-hint { color: var(--accent); opacity: 0.7; }
 </style>
 </head>
 <body>
-
 <div class="cm-tool">
 
   <div class="cm-header">
@@ -312,14 +343,21 @@
     <div class="cm-divider__line"></div>
   </div>
 
-  <nav class="cm-nav" role="tablist">
-    <button class="cm-nav__btn active" data-shot="0" role="tab" aria-selected="true">Front Cabin</button>
-    <button class="cm-nav__btn" data-shot="1" role="tab" aria-selected="false">Driver's POV</button>
-    <button class="cm-nav__btn" data-shot="2" role="tab" aria-selected="false">Rear Cabin</button>
-    <button class="cm-nav__btn" data-shot="3" role="tab" aria-selected="false">Footwell</button>
-    <button class="cm-nav__btn" data-shot="4" role="tab" aria-selected="false">Boot</button>
-    <button class="cm-nav__btn" data-shot="5" role="tab" aria-selected="false">Steering Wheel</button>
+  <nav class="cm-nav" role="tablist" id="main-nav">
+    <button class="cm-nav__btn active" data-shot="0" role="tab">Front Cabin</button>
+    <button class="cm-nav__btn" data-shot="1" role="tab">Driver's POV</button>
+    <button class="cm-nav__btn" data-shot="2" role="tab">Rear Cabin</button>
+    <button class="cm-nav__btn" data-shot="3" role="tab">Footwell</button>
+    <button class="cm-nav__btn" data-shot="4" role="tab">Boot</button>
+    <button class="cm-nav__btn" data-shot="5" role="tab">Steering Wheel</button>
   </nav>
+
+  <!-- Back bar shown when on a close-up destination -->
+  <div class="cm-back-bar" id="back-bar" role="button" tabindex="0" aria-label="Return to previous view">
+    <span class="cm-back-bar__arrow">←</span>
+    <span class="cm-back-bar__label">Return to</span>
+    <span class="cm-back-bar__from" id="back-label">Front Cabin</span>
+  </div>
 
   <div class="cm-viewer" id="viewer">
     <img class="cm-viewer__img" id="main-img" src="" alt="" />
@@ -331,17 +369,32 @@
       <div class="cm-panel__body">
         <div class="cm-panel__zone" id="panel-zone"></div>
         <p class="cm-panel__desc" id="panel-desc"></p>
+        <button class="cm-panel__cta" id="panel-cta" style="display:none">
+          View Close-Up <span class="cm-panel__cta__arrow">→</span>
+        </button>
       </div>
       <button class="cm-panel__close" id="panel-close" aria-label="Close">✕</button>
     </div>
   </div>
 
-  <p class="cm-hint">Select a numbered marker to explore each zone</p>
+  <p class="cm-hint" id="hint-text">Select a marker to explore · pulsing dots reveal close-up views</p>
 
 </div>
 
 <script>
 const BASE = 'https://elise-beep.github.io/chrome-mercy-assets/';
+
+// Shot index constants — easier to reference by name
+const SHOT = {
+  FRONT_CABIN:    0,
+  DRIVER_POV:     1,
+  REAR_CABIN:     2,
+  FOOTWELL:       3,
+  BOOT:           4,
+  STEERING_WHEEL: 5,
+  SEATS_CLOSEUP:  6,  // placeholder — add image when ready
+  DOOR_CARD:      7   // placeholder — add image when ready
+};
 
 const ZONES = {
   'front-seats':      { name: 'Front Seats',        desc: 'The focal point of every interior transformation. Chrome Mercy works with full-grain leather, alcantara, and suede — each seat sculpted with bespoke stitching patterns, channel quilting, or panel inlays unique to every commission.' },
@@ -364,128 +417,233 @@ const ZONES = {
   'driving-controls': { name: 'Driving Controls',    desc: 'Paddle shifters, indicator stalks, wiper controls and button surfaces wrapped or finished in leather and alcantara bring the entire cockpit into the design language of the interior.' }
 };
 
-// Correct order: Shot 1 = front cabin wide, Shot 2 = driver POV,
-// Shot 3 = rear cabin, Shot 4 = footwell, Shot 5 = boot, Shot 6 = steering wheel
+// Hotspot types:
+//   info     — opens description panel only
+//   navigate — opens panel with "View Close-Up" button that jumps to another shot
+//
+// For navigate hotspots:
+//   navigateTo: SHOT index to jump to
+//   ctaLabel: text for the button (optional, defaults to "View Close-Up")
+
 const SHOTS = [
+  // 0 — Front Cabin Wide
   {
     img: BASE + 'Shot 1.png',
     alt: 'Front cabin wide',
+    navLabel: 'Front Cabin',
+    isCloseup: false,
     hotspots: [
-      { id: 1, zone: 'front-seats',      x: 62, y: 65 },
-      { id: 2, zone: 'door-cards-front', x: 10, y: 60 },
-      { id: 3, zone: 'steering-wheel',   x: 76, y: 50 },
-      { id: 4, zone: 'dashboard',        x: 44, y: 33 },
-      { id: 5, zone: 'centre-console',   x: 50, y: 76 }
+      { id: 1, zone: 'front-seats',      x: 62, y: 65, type: 'navigate', navigateTo: SHOT.SEATS_CLOSEUP },
+      { id: 2, zone: 'door-cards-front', x: 10, y: 60, type: 'navigate', navigateTo: SHOT.DOOR_CARD },
+      { id: 3, zone: 'steering-wheel',   x: 76, y: 50, type: 'navigate', navigateTo: SHOT.STEERING_WHEEL },
+      { id: 4, zone: 'dashboard',        x: 44, y: 33, type: 'info' },
+      { id: 5, zone: 'centre-console',   x: 50, y: 76, type: 'info' }
     ]
   },
+  // 1 — Driver's POV
   {
     img: BASE + 'Shot 2.png',
     alt: 'Driver\'s POV — headliner, sun visors, roof console, pillars',
+    navLabel: 'Driver\'s POV',
+    isCloseup: false,
     hotspots: [
-      { id: 1, zone: 'headliner',    x: 56, y: 16 },
-      { id: 2, zone: 'roof-console', x: 50, y: 32 },
-      { id: 3, zone: 'sun-visors',   x: 27, y: 38 },
-      { id: 4, zone: 'pillars',      x: 9,  y: 55 },
-      { id: 5, zone: 'dashboard',    x: 48, y: 68 }
+      { id: 1, zone: 'headliner',    x: 56, y: 16, type: 'info' },
+      { id: 2, zone: 'roof-console', x: 50, y: 32, type: 'info' },
+      { id: 3, zone: 'sun-visors',   x: 27, y: 38, type: 'info' },
+      { id: 4, zone: 'pillars',      x: 9,  y: 55, type: 'info' },
+      { id: 5, zone: 'dashboard',    x: 48, y: 68, type: 'navigate', navigateTo: SHOT.FRONT_CABIN }
     ]
   },
+  // 2 — Rear Cabin
   {
     img: BASE + 'Shot 3.png',
     alt: 'Rear cabin — rear seats, door cards, seatbelts',
+    navLabel: 'Rear Cabin',
+    isCloseup: false,
     hotspots: [
-      { id: 1, zone: 'rear-seats',      x: 50, y: 62 },
-      { id: 2, zone: 'seatbelts',       x: 23, y: 32 },
-      { id: 3, zone: 'door-cards-rear', x: 78, y: 55 }
+      { id: 1, zone: 'rear-seats',      x: 50, y: 62, type: 'info' },
+      { id: 2, zone: 'seatbelts',       x: 23, y: 32, type: 'info' },
+      { id: 3, zone: 'door-cards-rear', x: 78, y: 55, type: 'info' }
     ]
   },
+  // 3 — Footwell
   {
     img: BASE + 'Shot 4.png',
     alt: 'Footwell and floor — carpet, kick panels',
+    navLabel: 'Footwell',
+    isCloseup: false,
     hotspots: [
-      { id: 1, zone: 'carpet',      x: 56, y: 55 },
-      { id: 2, zone: 'kick-panels', x: 30, y: 84 }
+      { id: 1, zone: 'carpet',      x: 56, y: 55, type: 'info' },
+      { id: 2, zone: 'kick-panels', x: 30, y: 84, type: 'info' }
     ]
   },
+  // 4 — Boot
   {
     img: BASE + 'Shot 5.png',
     alt: 'Boot open — boot lining, parcel shelf',
+    navLabel: 'Boot',
+    isCloseup: false,
     hotspots: [
-      { id: 1, zone: 'boot-lining',        x: 50, y: 58 },
-      { id: 2, zone: 'rear-parcel-shelf',  x: 50, y: 24 }
+      { id: 1, zone: 'boot-lining',       x: 50, y: 58, type: 'info' },
+      { id: 2, zone: 'rear-parcel-shelf', x: 50, y: 24, type: 'info' }
     ]
   },
+  // 5 — Steering Wheel close-up
   {
     img: BASE + 'Shot 6.png',
     alt: 'Steering wheel and instrument cluster',
+    navLabel: 'Steering Wheel',
+    isCloseup: true,
+    returnTo: SHOT.FRONT_CABIN,
     hotspots: [
-      { id: 1, zone: 'steering-wheel',   x: 50, y: 14 },
-      { id: 2, zone: 'driving-controls', x: 72, y: 62 }
+      { id: 1, zone: 'steering-wheel',   x: 50, y: 14, type: 'info' },
+      { id: 2, zone: 'driving-controls', x: 72, y: 62, type: 'info' }
+    ]
+  },
+  // 6 — Seats close-up (PLACEHOLDER — replace filename when image is ready)
+  {
+    img: BASE + 'Seats Closeup.png',
+    alt: 'Front and rear seat faces — upholstery detail',
+    navLabel: 'Seats Detail',
+    isCloseup: true,
+    returnTo: SHOT.FRONT_CABIN,
+    hotspots: [
+      { id: 1, zone: 'front-seats', x: 35, y: 50, type: 'info' },
+      { id: 2, zone: 'rear-seats',  x: 70, y: 55, type: 'info' }
+    ]
+  },
+  // 7 — Door Card close-up (PLACEHOLDER — replace filename when image is ready)
+  {
+    img: BASE + 'Door Card Closeup.png',
+    alt: 'Front door card close-up — upholstery detail',
+    navLabel: 'Door Card Detail',
+    isCloseup: true,
+    returnTo: SHOT.FRONT_CABIN,
+    hotspots: [
+      { id: 1, zone: 'door-cards-front', x: 50, y: 45, type: 'info' }
     ]
   }
 ];
 
-let currentShot = 0;
+// ── State ──────────────────────────────────────────────
+let currentShot  = 0;
+let previousShot = 0; // where to return from a close-up
 
+// ── DOM refs ───────────────────────────────────────────
 const viewer    = document.getElementById('viewer');
 const mainImg   = document.getElementById('main-img');
 const panel     = document.getElementById('info-panel');
 const panelNum  = document.getElementById('panel-num');
 const panelZone = document.getElementById('panel-zone');
 const panelDesc = document.getElementById('panel-desc');
+const panelCta  = document.getElementById('panel-cta');
+const backBar   = document.getElementById('back-bar');
+const backLabel = document.getElementById('back-label');
 const navBtns   = document.querySelectorAll('.cm-nav__btn');
+const hintText  = document.getElementById('hint-text');
 
-function renderShot(idx) {
+// ── Navigate to a shot ─────────────────────────────────
+function goToShot(idx, fromIdx) {
   const shot = SHOTS[idx];
+  if (!shot) return;
+
+  // Track where we came from for close-ups
+  if (shot.isCloseup) {
+    previousShot = (fromIdx !== undefined) ? fromIdx : currentShot;
+  }
+  currentShot = idx;
+
+  // Image swap
   mainImg.classList.remove('loaded');
   mainImg.src = shot.img;
   mainImg.alt = shot.alt;
   mainImg.onload  = () => mainImg.classList.add('loaded');
-  mainImg.onerror = () => {};
+  mainImg.onerror = () => mainImg.classList.remove('loaded');
+
+  // Hotspots
   viewer.querySelectorAll('.cm-hotspot').forEach(h => h.remove());
   shot.hotspots.forEach(hs => {
     const wrap = document.createElement('div');
-    wrap.className = 'cm-hotspot';
+    wrap.className = 'cm-hotspot' + (hs.type === 'navigate' ? ' nav-type' : '');
     wrap.style.left = hs.x + '%';
     wrap.style.top  = hs.y + '%';
-    wrap.innerHTML  = `<div class="cm-hotspot__pulse"></div><button class="cm-hotspot__core" aria-label="View ${ZONES[hs.zone].name}">${hs.id}</button>`;
-    wrap.querySelector('.cm-hotspot__core').addEventListener('click', () => toggleHotspot(wrap, hs));
+    const icon = hs.type === 'navigate' ? '' : hs.id;
+    wrap.innerHTML = `<div class="cm-hotspot__pulse"></div><button class="cm-hotspot__core" aria-label="${ZONES[hs.zone].name}">${icon}</button>`;
+    wrap.querySelector('.cm-hotspot__core').addEventListener('click', () => handleHotspot(wrap, hs));
     viewer.appendChild(wrap);
   });
+
+  // Nav tab highlight (only for main shots 0-5)
+  navBtns.forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-selected'); });
+  const mainIdx = shot.isCloseup ? previousShot : idx;
+  const activeBtn = document.querySelector(`.cm-nav__btn[data-shot="${mainIdx}"]`);
+  if (activeBtn) { activeBtn.classList.add('active'); activeBtn.setAttribute('aria-selected', 'true'); }
+
+  // Back bar
+  if (shot.isCloseup) {
+    const returnShot = SHOTS[previousShot];
+    backLabel.textContent = returnShot ? returnShot.navLabel : 'Previous View';
+    backBar.classList.add('visible');
+  } else {
+    backBar.classList.remove('visible');
+  }
+
+  // Hint
+  const hasNav = shot.hotspots.some(h => h.type === 'navigate');
+  hintText.innerHTML = hasNav
+    ? 'Select a marker to explore · <span style="color:var(--accent-light)">pulsing dots</span> reveal close-up views'
+    : 'Select a numbered marker to explore each zone';
+
   closePanel();
 }
 
-function toggleHotspot(el, hs) {
+// ── Handle hotspot click ───────────────────────────────
+function handleHotspot(el, hs) {
+  // Navigate hotspots go straight to destination — no panel, no friction
+  if (hs.type === 'navigate' && hs.navigateTo !== undefined) {
+    goToShot(hs.navigateTo, currentShot);
+    return;
+  }
+
   const wasActive = el.classList.contains('active');
   viewer.querySelectorAll('.cm-hotspot').forEach(h => h.classList.remove('active'));
   if (wasActive) { closePanel(); return; }
+
   el.classList.add('active');
   const z = ZONES[hs.zone];
-  panelNum.textContent  = String(hs.id).padStart(2,'0');
-  panelZone.textContent = z.name;
-  panelDesc.textContent = z.desc;
+  panelNum.textContent   = String(hs.id).padStart(2, '0');
+  panelZone.textContent  = z.name;
+  panelDesc.textContent  = z.desc;
+  panelCta.style.display = 'none';
+  panelCta.onclick       = null;
+
   panel.classList.add('open');
   setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
 }
 
+// ── Close panel ────────────────────────────────────────
 function closePanel() {
   panel.classList.remove('open');
   viewer.querySelectorAll('.cm-hotspot').forEach(h => h.classList.remove('active'));
 }
 
+// ── Nav tab clicks ─────────────────────────────────────
 navBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     const idx = +btn.dataset.shot;
-    if (idx === currentShot) return;
-    navBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
-    btn.classList.add('active');
-    btn.setAttribute('aria-selected','true');
-    currentShot = idx;
-    renderShot(idx);
+    goToShot(idx);
   });
 });
 
+// ── Back bar ───────────────────────────────────────────
+backBar.addEventListener('click', () => goToShot(previousShot));
+backBar.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') goToShot(previousShot); });
+
+// ── Close button ───────────────────────────────────────
 document.getElementById('panel-close').addEventListener('click', closePanel);
-renderShot(0);
+
+// ── Init ───────────────────────────────────────────────
+goToShot(0);
 </script>
 </body>
 </html>
