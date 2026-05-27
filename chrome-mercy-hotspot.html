@@ -11,16 +11,23 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #1a1814;
-    --bg-panel: #1e1c18;
-    --accent: #B4966E;
-    --accent-border: rgba(180,150,110,0.28);
-    --text-primary: #e8e0d4;
-    --text-secondary: #9a907f;
-    --text-muted: #5a524a;
-    --border: rgba(180,150,110,0.12);
+    --bg:           #0d1210;
+    --bg-elevated:  #131a16;
+    --bg-panel:     #111a14;
+    --accent:       #C4975A;
+    --accent-light: #d4aa72;
+    --accent-dim:   rgba(196,151,90,0.18);
+    --accent-border:rgba(196,151,90,0.22);
+    --green-deep:   #1a2e22;
+    --green-mid:    #243d2e;
+    --text-white:   #ffffff;
+    --text-primary: #f0ece6;
+    --text-secondary:#b8b0a4;
+    --text-muted:   #5c5850;
+    --border:       rgba(196,151,90,0.15);
+    --border-strong:rgba(196,151,90,0.3);
     --font-heading: 'Cormorant Garamond', serif;
-    --font-body: 'Inter', sans-serif;
+    --font-body:    'Inter', sans-serif;
   }
 
   html, body {
@@ -35,19 +42,19 @@
   .cm-tool {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 40px 24px 60px;
+    padding: 44px 24px 64px;
   }
 
-  /* Header */
+  /* ── Header ── */
   .cm-header {
     text-align: center;
-    margin-bottom: 36px;
+    margin-bottom: 32px;
   }
   .cm-header__eyebrow {
     font-family: var(--font-body);
     font-weight: 300;
     font-size: 10px;
-    letter-spacing: 0.32em;
+    letter-spacing: 0.34em;
     text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 14px;
@@ -55,22 +62,22 @@
   .cm-header__title {
     font-family: var(--font-heading);
     font-weight: 300;
-    font-size: clamp(28px, 4vw, 42px);
+    font-size: clamp(30px, 4vw, 46px);
     letter-spacing: 0.04em;
-    color: var(--text-primary);
+    color: var(--text-white);
     margin-bottom: 10px;
     font-style: italic;
   }
   .cm-header__subtitle {
     font-family: var(--font-body);
     font-weight: 300;
-    font-size: 11px;
-    letter-spacing: 0.18em;
+    font-size: 10px;
+    letter-spacing: 0.22em;
     color: var(--text-secondary);
     text-transform: uppercase;
   }
 
-  /* Divider */
+  /* ── Divider ── */
   .cm-divider {
     display: flex;
     align-items: center;
@@ -83,85 +90,86 @@
     background: var(--accent);
     transform: rotate(45deg);
     flex-shrink: 0;
-    opacity: 0.7;
   }
 
-  /* Nav */
+  /* ── Nav ── */
   .cm-nav {
     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    border-bottom: 1px solid var(--border);
   }
   .cm-nav::-webkit-scrollbar { display: none; }
 
   .cm-nav__btn {
     background: none;
     border: none;
-    border-bottom: 1px solid transparent;
+    border-bottom: 2px solid transparent;
     margin-bottom: -1px;
-    padding: 13px 20px;
+    padding: 12px 22px;
     cursor: pointer;
     font-family: var(--font-body);
-    font-weight: 300;
+    font-weight: 400;
     font-size: 10px;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--text-muted);
     white-space: nowrap;
-    transition: color 0.35s ease, border-color 0.35s ease;
+    transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
     flex-shrink: 0;
-    position: relative;
   }
-  .cm-nav__btn:hover { color: var(--text-secondary); }
+  .cm-nav__btn:hover {
+    color: var(--text-secondary);
+    background: rgba(196,151,90,0.04);
+  }
   .cm-nav__btn.active {
-    color: var(--accent);
+    color: var(--accent-light);
     border-bottom-color: var(--accent);
   }
 
-  /* Viewer */
+  /* ── Viewer ── */
   .cm-viewer {
     position: relative;
-    background: #0e0c09;
+    background: #060a07;
     overflow: hidden;
     line-height: 0;
-    /* maintain 4:3 aspect ratio as a minimum, but grow with image */
   }
-
   .cm-viewer__img {
     width: 100%;
     display: block;
     opacity: 0;
-    transition: opacity 0.55s ease;
-    object-fit: cover;
+    transition: opacity 0.6s ease;
   }
   .cm-viewer__img.loaded { opacity: 1; }
 
-  /* Hotspots */
+  /* ── Hotspots ── */
   .cm-hotspot {
     position: absolute;
     transform: translate(-50%, -50%);
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
     cursor: pointer;
     z-index: 10;
   }
   @media (max-width: 600px) {
-    .cm-hotspot { width: 40px; height: 40px; }
+    .cm-hotspot { width: 42px; height: 42px; }
   }
 
   .cm-hotspot__pulse {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    border: 1px solid rgba(180,150,110,0.55);
-    animation: hs-pulse 2.8s ease-in-out infinite;
+    border: 1px solid rgba(196,151,90,0.6);
+    animation: hs-pulse 3s ease-in-out infinite;
   }
   .cm-hotspot__core {
     position: absolute;
-    inset: 6px;
+    inset: 7px;
     border-radius: 50%;
     background: var(--accent);
     display: flex;
@@ -170,51 +178,53 @@
     font-family: var(--font-body);
     font-size: 10px;
     font-weight: 500;
-    color: #18160f;
-    letter-spacing: 0;
-    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
+    color: #0d1210;
     border: none;
-    box-shadow: 0 2px 12px rgba(180,150,110,0.25);
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 10px rgba(196,151,90,0.4);
   }
   .cm-hotspot__core:hover {
-    background: #cdb589;
-    transform: scale(1.08);
+    background: var(--accent-light);
+    transform: scale(1.1);
   }
   .cm-hotspot.active .cm-hotspot__core {
-    background: #f0e8dc;
-    transform: scale(1.12);
-    box-shadow: 0 2px 18px rgba(240,232,220,0.3);
+    background: #ffffff;
+    color: #0d1210;
+    transform: scale(1.15);
+    box-shadow: 0 2px 20px rgba(255,255,255,0.25);
   }
   .cm-hotspot.active .cm-hotspot__pulse {
-    border-color: rgba(240,232,220,0.3);
+    border-color: rgba(255,255,255,0.25);
     animation: none;
   }
 
   @keyframes hs-pulse {
-    0%, 100% { transform: scale(1); opacity: 0.6; }
-    60% { transform: scale(1.5); opacity: 0; }
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    60%       { transform: scale(1.55); opacity: 0; }
   }
 
-  /* Info Panel */
+  /* ── Info Panel ── */
   .cm-panel {
-    background: var(--bg-panel);
-    border: 1px solid var(--border);
+    background: var(--green-deep);
+    border: 1px solid var(--border-strong);
     border-top: none;
     overflow: hidden;
     max-height: 0;
-    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
     opacity: 0;
+    transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
   }
   .cm-panel.open {
-    max-height: 320px;
+    max-height: 340px;
     opacity: 1;
   }
+
   .cm-panel__inner {
     padding: 28px 32px;
     display: flex;
     gap: 28px;
     align-items: flex-start;
+    border-left: 3px solid var(--accent);
   }
   @media (max-width: 600px) {
     .cm-panel__inner { padding: 20px 18px; gap: 0; flex-direction: column; }
@@ -222,61 +232,65 @@
 
   .cm-panel__num {
     font-family: var(--font-heading);
-    font-size: 52px;
+    font-size: 56px;
     font-weight: 300;
     color: var(--accent-border);
     line-height: 1;
     flex-shrink: 0;
     letter-spacing: -0.02em;
-    min-width: 48px;
+    min-width: 52px;
   }
   @media (max-width: 600px) {
-    .cm-panel__num { font-size: 36px; margin-bottom: 10px; }
+    .cm-panel__num { font-size: 38px; margin-bottom: 10px; }
   }
 
   .cm-panel__body { flex: 1; min-width: 0; }
 
   .cm-panel__zone {
     font-family: var(--font-heading);
-    font-size: clamp(19px, 2.5vw, 26px);
+    font-size: clamp(20px, 2.5vw, 28px);
     font-weight: 400;
-    letter-spacing: 0.04em;
-    color: var(--text-primary);
-    margin-bottom: 10px;
     font-style: italic;
+    letter-spacing: 0.03em;
+    color: var(--text-white);
+    margin-bottom: 10px;
     line-height: 1.2;
   }
   .cm-panel__desc {
     font-family: var(--font-body);
     font-weight: 300;
     font-size: 12.5px;
-    line-height: 1.8;
+    line-height: 1.85;
     color: var(--text-secondary);
-    max-width: 700px;
+    max-width: 680px;
   }
 
   .cm-panel__close {
     background: none;
-    border: none;
+    border: 1px solid var(--border);
+    border-radius: 0;
     cursor: pointer;
     color: var(--text-muted);
-    font-size: 14px;
-    padding: 4px 4px 4px 8px;
+    font-size: 11px;
+    padding: 6px 8px;
     flex-shrink: 0;
     line-height: 1;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, border-color 0.3s ease;
     align-self: flex-start;
-    margin-top: 4px;
+    letter-spacing: 0.05em;
   }
-  .cm-panel__close:hover { color: var(--accent); }
+  .cm-panel__close:hover {
+    color: var(--accent);
+    border-color: var(--accent-border);
+  }
 
-  /* Hint */
+  /* ── Footer hint ── */
   .cm-hint {
-    margin-top: 18px;
+    margin-top: 20px;
     text-align: center;
     font-family: var(--font-body);
     font-size: 10px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
   }
@@ -315,7 +329,7 @@
     <div class="cm-panel__inner">
       <div class="cm-panel__num" id="panel-num">01</div>
       <div class="cm-panel__body">
-        <div class="cm-panel__zone" id="panel-zone">Zone</div>
+        <div class="cm-panel__zone" id="panel-zone"></div>
         <p class="cm-panel__desc" id="panel-desc"></p>
       </div>
       <button class="cm-panel__close" id="panel-close" aria-label="Close">✕</button>
@@ -327,46 +341,35 @@
 </div>
 
 <script>
+const BASE = 'https://elise-beep.github.io/chrome-mercy-assets/';
+
 const ZONES = {
-  'front-seats':      { name: 'Front Seats',           desc: 'The focal point of every interior transformation. Chrome Mercy works with full-grain leather, alcantara, and suede — each seat sculpted with bespoke stitching patterns, channel quilting, or panel inlays unique to every commission.' },
-  'headliner':        { name: 'Headliner',              desc: 'Often overlooked, always noticed by those who know. A bespoke headliner in alcantara or suede transforms the entire atmosphere of the cabin — absorbing light, deadening sound, and creating a quality no factory finish achieves.' },
-  'door-cards-front': { name: 'Door Cards (Front)',     desc: 'The four surfaces you touch most often. Front door card upholstery carries the design language of the seats through contrast panels, stitching colour, and inset materials — creating a fully resolved interior rather than a set of isolated pieces.' },
-  'dashboard':        { name: 'Dashboard',              desc: 'Leather or alcantara wrapping across the dashboard and upper surfaces unifies the interior into a single considered space. Particularly transformative on prestige and classic vehicles where factory plastic finishes undermine an otherwise exceptional car.' },
-  'centre-console':   { name: 'Centre Console',         desc: 'The architectural spine of the interior. Console upholstery completes the cabin surround and elevates the sense of craftsmanship throughout — including armrest, side walls, gear surround, and storage lid.' },
-  'roof-console':     { name: 'Roof Console',           desc: 'Every surface in a Chrome Mercy interior is considered. The roof console is upholstered to match the headliner and surrounding surfaces — eliminating the plastic intrusion that interrupts even the most carefully designed factory interior.' },
-  'sun-visors':       { name: 'Sun Visors',             desc: 'A detail that separates a complete interior transformation from a partial one. Sun visors upholstered in matching alcantara or leather make the difference between a car that is almost perfect and one that is entirely resolved.' },
-  'pillars':          { name: 'Pillars',                desc: 'The A, B, and C pillars frame every view from inside the car. Wrapped in leather or alcantara they become part of the interior architecture rather than a structural interruption.' },
-  'grab-handles':     { name: 'Grab Handles',           desc: 'Small in scale, significant in effect. Upholstered grab handles in matching leather or alcantara complete the interior at the detail level — the level at which a discerning eye measures true craftsmanship.' },
-  'rear-seats':       { name: 'Rear Seats',             desc: 'The rear cabin receives the same standard of material and craft as the front. Rear seat upholstery in matching full-grain leather and alcantara ensures the interior is resolved from every angle — not just the driver\'s perspective.' },
-  'seatbelts':        { name: 'Seatbelts',              desc: 'Custom webbing or leather-wrapped seatbelt hardware brings the final functional surface into the design language of the interior. A finishing detail that signals the difference between a retrim and a true transformation.' },
-  'door-cards-rear':  { name: 'Door Cards (Rear)',      desc: 'Rear door cards upholstered to match the front — same materials, same stitching, same panel layout. The interior reads as a single designed object rather than a collection of individually trimmed surfaces.' },
-  'carpet':           { name: 'Carpet',                 desc: 'Bespoke cut-pile or loop carpet in premium wool or nylon, bound and finished to the exact dimensions of each vehicle. The floor is the largest single surface in the interior — it deserves the same standard of material as everything above it.' },
-  'kick-panels':      { name: 'Kick Panels',            desc: 'The lower door and sill panels complete the floor-level view of the interior. Upholstered in leather or carpet to match the surrounding surfaces, they eliminate the visual break between the floor and the door cards.' },
-  'boot-lining':      { name: 'Boot Lining',            desc: 'A complete interior transformation extends to the boot. Custom alcantara or leather boot lining — including side walls, floor, and lid — brings the same standard of finish to a space most studios leave untouched.' },
-  'rear-parcel-shelf':{ name: 'Rear Parcel Shelf',      desc: 'The parcel shelf is visible from outside the car through the rear glass — it is part of the first impression. Upholstered in matching alcantara or leather it completes the interior story from every angle.' },
-  'steering-wheel':   { name: 'Steering Wheel Wrap',    desc: 'The most tactile surface in the car. Hand-wrapped in full-grain leather or alcantara with bespoke stitch colour, grip placement, and flat-bottom shaping if desired — it transforms the driving experience before the engine starts.' },
-  'driving-controls': { name: 'Driving Controls',       desc: 'Paddle shifters, indicator stalks, wiper controls and button surfaces wrapped or finished in leather and alcantara bring the entire cockpit into the design language of the interior.' }
+  'front-seats':      { name: 'Front Seats',        desc: 'The focal point of every interior transformation. Chrome Mercy works with full-grain leather, alcantara, and suede — each seat sculpted with bespoke stitching patterns, channel quilting, or panel inlays unique to every commission.' },
+  'headliner':        { name: 'Headliner',           desc: 'Often overlooked, always noticed by those who know. A bespoke headliner in alcantara or suede transforms the entire atmosphere of the cabin — absorbing light, deadening sound, and creating a quality no factory finish achieves.' },
+  'door-cards-front': { name: 'Door Cards (Front)',  desc: 'The four surfaces you touch most often. Front door card upholstery carries the design language of the seats through contrast panels, stitching colour, and inset materials — creating a fully resolved interior rather than a set of isolated pieces.' },
+  'dashboard':        { name: 'Dashboard',           desc: 'Leather or alcantara wrapping across the dashboard and upper surfaces unifies the interior into a single considered space. Particularly transformative on prestige and classic vehicles where factory plastic finishes undermine an otherwise exceptional car.' },
+  'centre-console':   { name: 'Centre Console',      desc: 'The architectural spine of the interior. Console upholstery completes the cabin surround and elevates the sense of craftsmanship throughout — including armrest, side walls, gear surround, and storage lid.' },
+  'roof-console':     { name: 'Roof Console',        desc: 'Every surface in a Chrome Mercy interior is considered. The roof console is upholstered to match the headliner and surrounding surfaces — eliminating the plastic intrusion that interrupts even the most carefully designed factory interior.' },
+  'sun-visors':       { name: 'Sun Visors',          desc: 'A detail that separates a complete interior transformation from a partial one. Sun visors upholstered in matching alcantara or leather make the difference between a car that is almost perfect and one that is entirely resolved.' },
+  'pillars':          { name: 'Pillars',             desc: 'The A, B, and C pillars frame every view from inside the car. Wrapped in leather or alcantara they become part of the interior architecture rather than a structural interruption.' },
+  'grab-handles':     { name: 'Grab Handles',        desc: 'Small in scale, significant in effect. Upholstered grab handles in matching leather or alcantara complete the interior at the detail level — the level at which a discerning eye measures true craftsmanship.' },
+  'rear-seats':       { name: 'Rear Seats',          desc: 'The rear cabin receives the same standard of material and craft as the front. Rear seat upholstery in matching full-grain leather and alcantara ensures the interior is resolved from every angle — not just the driver\'s perspective.' },
+  'seatbelts':        { name: 'Seatbelts',           desc: 'Custom webbing or leather-wrapped seatbelt hardware brings the final functional surface into the design language of the interior. A finishing detail that signals the difference between a retrim and a true transformation.' },
+  'door-cards-rear':  { name: 'Door Cards (Rear)',   desc: 'Rear door cards upholstered to match the front — same materials, same stitching, same panel layout. The interior reads as a single designed object rather than a collection of individually trimmed surfaces.' },
+  'carpet':           { name: 'Carpet',              desc: 'Bespoke cut-pile or loop carpet in premium wool or nylon, bound and finished to the exact dimensions of each vehicle. The floor is the largest single surface in the interior — it deserves the same standard of material as everything above it.' },
+  'kick-panels':      { name: 'Kick Panels',         desc: 'The lower door and sill panels complete the floor-level view of the interior. Upholstered in leather or carpet to match the surrounding surfaces, they eliminate the visual break between the floor and the door cards.' },
+  'boot-lining':      { name: 'Boot Lining',         desc: 'A complete interior transformation extends to the boot. Custom alcantara or leather boot lining — including side walls, floor, and lid — brings the same standard of finish to a space most studios leave untouched.' },
+  'rear-parcel-shelf':{ name: 'Rear Parcel Shelf',   desc: 'The parcel shelf is visible from outside the car through the rear glass — it is part of the first impression. Upholstered in matching alcantara or leather it completes the interior story from every angle.' },
+  'steering-wheel':   { name: 'Steering Wheel Wrap', desc: 'The most tactile surface in the car. Hand-wrapped in full-grain leather or alcantara with bespoke stitch colour, grip placement, and flat-bottom shaping if desired — it transforms the driving experience before the engine starts.' },
+  'driving-controls': { name: 'Driving Controls',    desc: 'Paddle shifters, indicator stalks, wiper controls and button surfaces wrapped or finished in leather and alcantara bring the entire cockpit into the design language of the interior.' }
 };
 
-// File mapping: Shot%206.png is the front cabin wide, Shot%201.png is steering wheel closeup, etc.
-// Shot_6 = Front cabin wide (Shot 1 brief)
-// Shot_5 = Driver's POV headliner (Shot 2 brief)
-// Shot_4 = Rear cabin (Shot 3 brief)
-// Shot_3 = Footwell/floor (Shot 4 brief)
-// Shot_2 = Boot open (Shot 5 brief)
-// Shot_1 = Steering wheel closeup (Shot 6 brief)
-
+// Correct order: Shot 1 = front cabin wide, Shot 2 = driver POV,
+// Shot 3 = rear cabin, Shot 4 = footwell, Shot 5 = boot, Shot 6 = steering wheel
 const SHOTS = [
-  // --- FRONT CABIN WIDE (Shot%206.png) ---
-  // RHD: driver on right, passenger on left. Door open on left. 
-  // Front seat centre: ~62% x, 68% y
-  // Left door card (passenger side, large brown panel): ~10% x, 60% y
-  // Steering wheel (right side, partially visible): ~75% x, 55% y  
-  // Dashboard (long tan shelf across top): ~45% x, 35% y
-  // Centre console (gear shifter, armrest, spine): ~50% x, 75% y
   {
-    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot%206.png',
-    alt: 'Front cabin — passenger door open, both seats, dashboard, steering wheel, centre console',
+    img: BASE + 'Shot 1.png',
+    alt: 'Front cabin wide',
     hotspots: [
       { id: 1, zone: 'front-seats',      x: 62, y: 65 },
       { id: 2, zone: 'door-cards-front', x: 10, y: 60 },
@@ -375,16 +378,9 @@ const SHOTS = [
       { id: 5, zone: 'centre-console',   x: 50, y: 76 }
     ]
   },
-  // --- DRIVER'S POV / HEADLINER (Shot%205.png) ---
-  // Dark alcantara headliner fills top ~40% of frame
-  // Roof console (black unit with controls, centre top): ~50% x, 30% y
-  // Sun visor (left side, folded against headliner): ~25% x, 28% y
-  // A-pillar (left, vertical brown wrap): ~8% x, 50% y
-  // Dashboard (long tan band mid-frame): ~50% x, 68% y
-  // Headliner (large dark surface): ~55% x, 18% y
   {
-    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot%205.png',
-    alt: 'Driver\'s POV — headliner, sun visors, roof console, pillars, rear view mirror',
+    img: BASE + 'Shot 2.png',
+    alt: 'Driver\'s POV — headliner, sun visors, roof console, pillars',
     hotspots: [
       { id: 1, zone: 'headliner',    x: 56, y: 16 },
       { id: 2, zone: 'roof-console', x: 50, y: 32 },
@@ -393,53 +389,34 @@ const SHOTS = [
       { id: 5, zone: 'dashboard',    x: 48, y: 68 }
     ]
   },
-  // --- REAR CABIN (Shot%204.png) ---
-  // Rear seats fill the middle — tan leather + dark alcantara panels
-  // Left seatbelt strap runs diagonally from upper-left: ~22% x, 28% y
-  // Right seatbelt strap on right pillar: ~72% x, 30% y — use single hotspot at left belt
-  // C-pillar / door card area (right side, dark panel): ~80% x, 55% y
-  // Centre rear seat body: ~50% x, 60% y
   {
-    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot%204.png',
-    alt: 'Rear cabin — rear seats, rear door cards, C pillars, seatbelts',
+    img: BASE + 'Shot 3.png',
+    alt: 'Rear cabin — rear seats, door cards, seatbelts',
     hotspots: [
       { id: 1, zone: 'rear-seats',      x: 50, y: 62 },
       { id: 2, zone: 'seatbelts',       x: 23, y: 32 },
       { id: 3, zone: 'door-cards-rear', x: 78, y: 55 }
     ]
   },
-  // --- FOOTWELL & FLOOR (Shot%203.png) ---
-  // Dark carpet mat with PORSCHE text, centre of frame
-  // Sill plate / kick panel along bottom edge (silver "911 Carrera S" sill): ~30% x, 85% y
-  // Carpet mat centre: ~55% x, 58% y
   {
-    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot%203.png',
-    alt: 'Footwell and floor — carpet, kick panels, sill plates, floor mats',
+    img: BASE + 'Shot 4.png',
+    alt: 'Footwell and floor — carpet, kick panels',
     hotspots: [
       { id: 1, zone: 'carpet',      x: 56, y: 55 },
       { id: 2, zone: 'kick-panels', x: 30, y: 84 }
     ]
   },
-  // --- BOOT OPEN (Shot%202.png) ---
-  // Boot interior: dark alcantara lining fills the rectangular aperture
-  // Tan leather surround trim around aperture edge: visible all around
-  // Boot lining (dark interior floor/walls): ~50% x, 52% y
-  // Parcel shelf area = top of boot aperture / lid underside above: ~50% x, 22% y
   {
-    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot%202.png',
-    alt: 'Boot open — boot floor, side trims, parcel shelf',
+    img: BASE + 'Shot 5.png',
+    alt: 'Boot open — boot lining, parcel shelf',
     hotspots: [
-      { id: 1, zone: 'boot-lining',         x: 50, y: 58 },
-      { id: 2, zone: 'rear-parcel-shelf',   x: 50, y: 24 }
+      { id: 1, zone: 'boot-lining',        x: 50, y: 58 },
+      { id: 2, zone: 'rear-parcel-shelf',  x: 50, y: 24 }
     ]
   },
-  // --- STEERING WHEEL CLOSEUP (Shot%201.png) ---
-  // Full-frame steering wheel — tan leather rim, dark alcantara hub/spokes
-  // Steering wheel rim (upper arc, tan leather): ~50% x, 14% y
-  // Driving controls (column stalks left side, drive mode dial right of column): ~72% x, 62% y
   {
-    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot%201.png',
-    alt: 'Steering wheel and instrument cluster close-up',
+    img: BASE + 'Shot 6.png',
+    alt: 'Steering wheel and instrument cluster',
     hotspots: [
       { id: 1, zone: 'steering-wheel',   x: 50, y: 14 },
       { id: 2, zone: 'driving-controls', x: 72, y: 62 }
@@ -448,44 +425,32 @@ const SHOTS = [
 ];
 
 let currentShot = 0;
-let activeHotspot = null;
 
-const viewer   = document.getElementById('viewer');
-const mainImg  = document.getElementById('main-img');
-const panel    = document.getElementById('info-panel');
-const panelNum = document.getElementById('panel-num');
-const panelZone= document.getElementById('panel-zone');
-const panelDesc= document.getElementById('panel-desc');
-const navBtns  = document.querySelectorAll('.cm-nav__btn');
+const viewer    = document.getElementById('viewer');
+const mainImg   = document.getElementById('main-img');
+const panel     = document.getElementById('info-panel');
+const panelNum  = document.getElementById('panel-num');
+const panelZone = document.getElementById('panel-zone');
+const panelDesc = document.getElementById('panel-desc');
+const navBtns   = document.querySelectorAll('.cm-nav__btn');
 
 function renderShot(idx) {
   const shot = SHOTS[idx];
-
   mainImg.classList.remove('loaded');
   mainImg.src = shot.img;
   mainImg.alt = shot.alt;
   mainImg.onload  = () => mainImg.classList.add('loaded');
-  mainImg.onerror = () => mainImg.classList.remove('loaded');
-
-  // Remove old hotspots
+  mainImg.onerror = () => {};
   viewer.querySelectorAll('.cm-hotspot').forEach(h => h.remove());
-
-  // Render hotspots
   shot.hotspots.forEach(hs => {
     const wrap = document.createElement('div');
     wrap.className = 'cm-hotspot';
     wrap.style.left = hs.x + '%';
     wrap.style.top  = hs.y + '%';
-    wrap.dataset.zone = hs.zone;
-
-    wrap.innerHTML = `
-      <div class="cm-hotspot__pulse"></div>
-      <button class="cm-hotspot__core" aria-label="View ${ZONES[hs.zone].name}">${hs.id}</button>
-    `;
+    wrap.innerHTML  = `<div class="cm-hotspot__pulse"></div><button class="cm-hotspot__core" aria-label="View ${ZONES[hs.zone].name}">${hs.id}</button>`;
     wrap.querySelector('.cm-hotspot__core').addEventListener('click', () => toggleHotspot(wrap, hs));
     viewer.appendChild(wrap);
   });
-
   closePanel();
 }
 
@@ -494,12 +459,8 @@ function toggleHotspot(el, hs) {
   viewer.querySelectorAll('.cm-hotspot').forEach(h => h.classList.remove('active'));
   if (wasActive) { closePanel(); return; }
   el.classList.add('active');
-  openPanel(hs.id, hs.zone);
-}
-
-function openPanel(num, key) {
-  const z = ZONES[key];
-  panelNum.textContent  = String(num).padStart(2, '0');
+  const z = ZONES[hs.zone];
+  panelNum.textContent  = String(hs.id).padStart(2,'0');
   panelZone.textContent = z.name;
   panelDesc.textContent = z.desc;
   panel.classList.add('open');
@@ -524,7 +485,6 @@ navBtns.forEach(btn => {
 });
 
 document.getElementById('panel-close').addEventListener('click', closePanel);
-
 renderShot(0);
 </script>
 </body>
