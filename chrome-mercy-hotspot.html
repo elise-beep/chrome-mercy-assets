@@ -12,17 +12,17 @@
 
   :root {
     --bg:            #000000;
-    --bg-panel:      #0a0f0b;
-    --green-deep:    #080f0a;
-    --accent:        #C4975A;
-    --accent-light:  #d4aa72;
-    --accent-border: rgba(196,151,90,0.22);
+    --bg-panel:      #0d0d0d;
+    --accent:        #9B1C2E;
+    --accent-bright: #C0243A;
+    --accent-dim:    rgba(155,28,46,0.2);
+    --accent-border: rgba(155,28,46,0.35);
     --text-white:    #ffffff;
-    --text-primary:  #f0ece6;
-    --text-secondary:#b8b0a4;
-    --text-muted:    #5c5850;
-    --border:        rgba(196,151,90,0.15);
-    --border-strong: rgba(196,151,90,0.3);
+    --text-primary:  #f5f5f5;
+    --text-secondary:#c0bbb5;
+    --text-muted:    #555550;
+    --border:        rgba(155,28,46,0.18);
+    --border-strong: rgba(155,28,46,0.38);
     --font-heading:  'Cormorant Garamond', serif;
     --font-body:     'Inter', sans-serif;
   }
@@ -50,7 +50,7 @@
     font-size: 10px;
     letter-spacing: 0.34em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--accent-bright);
     margin-bottom: 14px;
   }
   .cm-header__title {
@@ -74,7 +74,7 @@
   /* Divider */
   .cm-divider { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
   .cm-divider__line { flex: 1; height: 1px; background: var(--border); }
-  .cm-divider__mark { width: 5px; height: 5px; background: var(--accent); transform: rotate(45deg); flex-shrink: 0; }
+  .cm-divider__mark { width: 5px; height: 5px; background: var(--accent-bright); transform: rotate(45deg); flex-shrink: 0; }
 
   /* Nav */
   .cm-nav {
@@ -92,7 +92,7 @@
     border: none;
     border-bottom: 2px solid transparent;
     margin-bottom: -1px;
-    padding: 12px 18px;
+    padding: 12px 16px;
     cursor: pointer;
     font-family: var(--font-body);
     font-weight: 400;
@@ -105,7 +105,7 @@
     flex-shrink: 0;
   }
   .cm-nav__btn:hover { color: var(--text-secondary); }
-  .cm-nav__btn.active { color: var(--accent-light); border-bottom-color: var(--accent); }
+  .cm-nav__btn.active { color: var(--text-white); border-bottom-color: var(--accent-bright); }
 
   /* Back bar */
   .cm-back-bar {
@@ -113,14 +113,14 @@
     align-items: center;
     gap: 10px;
     padding: 10px 18px;
-    background: #0a0a0a;
+    background: #0d0d0d;
     border-bottom: 1px solid var(--border);
     cursor: pointer;
     transition: background 0.3s ease;
   }
-  .cm-back-bar:hover { background: #111; }
+  .cm-back-bar:hover { background: #151515; }
   .cm-back-bar.visible { display: flex; }
-  .cm-back-bar__arrow { font-size: 12px; color: var(--accent); line-height: 1; }
+  .cm-back-bar__arrow { font-size: 12px; color: var(--accent-bright); line-height: 1; }
   .cm-back-bar__label {
     font-family: var(--font-body);
     font-size: 10px;
@@ -133,7 +133,7 @@
     font-family: var(--font-heading);
     font-size: 13px;
     font-style: italic;
-    color: var(--accent-light);
+    color: var(--text-white);
     margin-left: 4px;
   }
 
@@ -162,73 +162,34 @@
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    border: 1px solid rgba(196,151,90,0.7);
+    border: 1px solid rgba(192,36,58,0.7);
     animation: hs-pulse 3s ease-in-out infinite;
   }
   .cm-hotspot__core {
     position: absolute;
     inset: 7px;
     border-radius: 50%;
-    background: var(--accent);
+    background: var(--accent-bright);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-body);
     font-size: 10px;
     font-weight: 500;
-    color: #000;
+    color: #fff;
     border: none;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 2px 14px rgba(196,151,90,0.55);
+    box-shadow: 0 2px 14px rgba(192,36,58,0.5);
   }
-  .cm-hotspot__core:hover { background: var(--accent-light); transform: scale(1.15); }
+  .cm-hotspot__core:hover { background: #d62a42; transform: scale(1.15); }
   .cm-hotspot.active .cm-hotspot__core {
     background: #fff;
+    color: var(--accent);
     transform: scale(1.15);
     box-shadow: 0 2px 20px rgba(255,255,255,0.3);
   }
-  .cm-hotspot.active .cm-hotspot__pulse { border-color: rgba(255,255,255,0.2); animation: none; }
-
-  /* Tooltip */
-  .cm-hotspot__tooltip {
-    position: absolute;
-    bottom: calc(100% + 12px);
-    left: 50%;
-    transform: translateX(-50%) translateY(4px);
-    background: rgba(0,0,0,0.93);
-    border: 1px solid var(--border-strong);
-    padding: 8px 14px;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    backdrop-filter: blur(8px);
-    z-index: 20;
-  }
-  .cm-hotspot:hover .cm-hotspot__tooltip,
-  .cm-hotspot:focus-within .cm-hotspot__tooltip {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-  .cm-hotspot__tooltip-name {
-    font-family: var(--font-heading);
-    font-size: 14px;
-    font-style: italic;
-    color: var(--text-white);
-    display: block;
-    line-height: 1.3;
-    margin-bottom: 3px;
-  }
-  .cm-hotspot__tooltip-hint {
-    font-family: var(--font-body);
-    font-size: 9px;
-    font-weight: 300;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    display: block;
-  }
+  .cm-hotspot.active .cm-hotspot__pulse { border-color: rgba(255,255,255,0.25); animation: none; }
 
   @keyframes hs-pulse {
     0%, 100% { transform: scale(1); opacity: 0.7; }
@@ -237,7 +198,7 @@
 
   /* Info Panel */
   .cm-panel {
-    background: #0a0a0a;
+    background: #0d0d0d;
     border: 1px solid var(--border-strong);
     border-top: none;
     overflow: hidden;
@@ -252,7 +213,7 @@
     display: flex;
     gap: 28px;
     align-items: flex-start;
-    border-left: 3px solid var(--accent);
+    border-left: 3px solid var(--accent-bright);
   }
   @media (max-width: 600px) { .cm-panel__inner { padding: 20px 18px; gap: 0; flex-direction: column; } }
 
@@ -300,7 +261,7 @@
     transition: color 0.3s ease, border-color 0.3s ease;
     align-self: flex-start;
   }
-  .cm-panel__close:hover { color: var(--accent); border-color: var(--accent-border); }
+  .cm-panel__close:hover { color: var(--accent-bright); border-color: var(--accent-border); }
 
   /* Hint */
   .cm-hint {
@@ -312,6 +273,13 @@
     text-transform: uppercase;
     color: var(--text-muted);
   }
+
+  /* Mobile */
+  @media (max-width: 480px) {
+    .cm-tool { padding: 24px 14px 40px; }
+    .cm-nav__btn { padding: 10px 10px; font-size: 9px; letter-spacing: 0.12em; }
+    .cm-panel__inner { padding: 16px 14px; }
+  }
 </style>
 </head>
 <body>
@@ -320,7 +288,7 @@
   <div class="cm-header">
     <div class="cm-header__eyebrow">2022 Porsche 911 · 992 Series · Right Hand Drive</div>
     <h1 class="cm-header__title">Interior Transformation</h1>
-    <div class="cm-header__subtitle">Select a zone to explore the craft</div>
+    <div class="cm-header__subtitle">Click the markers to explore</div>
   </div>
 
   <div class="cm-divider">
@@ -339,6 +307,7 @@
     <button class="cm-nav__btn" data-shot="6" role="tab">Footwell</button>
     <button class="cm-nav__btn" data-shot="7" role="tab">Rear Seats</button>
     <button class="cm-nav__btn" data-shot="8" role="tab">Boot</button>
+    <button class="cm-nav__btn" data-shot="9" role="tab">Pillars</button>
   </nav>
 
   <div class="cm-back-bar" id="back-bar" role="button" tabindex="0" aria-label="Return to Front Cabin">
@@ -362,14 +331,13 @@
     </div>
   </div>
 
-  <p class="cm-hint" id="hint-text">Hover a marker to identify · click to explore</p>
+  <p class="cm-hint">Click the markers to explore</p>
 
 </div>
 
 <script>
 const BASE = 'https://elise-beep.github.io/chrome-mercy-assets/';
 
-// Shot indices
 const S = {
   FRONT_CABIN:    0,
   SEATS:          1,
@@ -379,7 +347,8 @@ const S = {
   HEADLINER:      5,
   FOOTWELL:       6,
   REAR_SEATS:     7,
-  BOOT:           8
+  BOOT:           8,
+  PILLARS:        9
 };
 
 const ZONES = {
@@ -403,10 +372,8 @@ const ZONES = {
   'grab-handles':     { name: 'Grab Handles',        desc: 'Small in scale, significant in effect. Upholstered grab handles in matching leather or alcantara complete the interior at the detail level — the level at which a discerning eye measures true craftsmanship.' }
 };
 
-// type: 'navigate' — click jumps to shot, shows tooltip with "Click for close-up"
-// type: 'info'     — click opens description panel, shows tooltip with "Click to explore"
 const SHOTS = [
-  // 0 — Front Cabin (hub) — navigate dots to shots 1–6, no rear seats/boot
+  // 0 — Front Cabin (hub) — navigate dots to shots 1–6 and 9, no rear seats or boot
   {
     img: BASE + 'Shot 1.png', alt: 'Front cabin wide',
     navLabel: 'Front Cabin', isCloseup: false,
@@ -417,7 +384,8 @@ const SHOTS = [
       { id: 4, zone: 'door-cards-front', x: 10, y: 60, type: 'navigate', navigateTo: S.DOOR_CARD },
       { id: 5, zone: 'headliner',        x: 52, y: 12, type: 'navigate', navigateTo: S.HEADLINER },
       { id: 6, zone: 'carpet',           x: 50, y: 85, type: 'navigate', navigateTo: S.FOOTWELL },
-      { id: 7, zone: 'centre-console',   x: 58, y: 76, type: 'info' }
+      { id: 7, zone: 'pillars',          x: 18, y: 35, type: 'navigate', navigateTo: S.PILLARS },
+      { id: 8, zone: 'centre-console',   x: 58, y: 76, type: 'info' }
     ]
   },
   // 1 — Seats close-up
@@ -455,7 +423,7 @@ const SHOTS = [
       { id: 1, zone: 'door-cards-front', x: 50, y: 45, type: 'info' }
     ]
   },
-  // 5 — Driver's POV / Headliner
+  // 5 — Headliner / Driver's POV
   {
     img: BASE + 'Shot 6.png', alt: 'Driver\'s POV — headliner, sun visors, roof console, pillars',
     navLabel: 'Headliner', isCloseup: true, returnTo: S.FRONT_CABIN,
@@ -475,7 +443,7 @@ const SHOTS = [
       { id: 2, zone: 'kick-panels', x: 30, y: 84, type: 'info' }
     ]
   },
-  // 7 — Rear Seats (tab only — no navigate dot from front cabin)
+  // 7 — Rear Seats (tab only)
   {
     img: BASE + 'Shot 8.png', alt: 'Rear cabin — rear seats, door cards, seatbelts',
     navLabel: 'Rear Seats', isCloseup: false,
@@ -485,13 +453,22 @@ const SHOTS = [
       { id: 3, zone: 'door-cards-rear', x: 78, y: 55, type: 'info' }
     ]
   },
-  // 8 — Boot (tab only — no navigate dot from front cabin)
+  // 8 — Boot (tab only)
   {
     img: BASE + 'Shot 9.png', alt: 'Boot open — boot lining, parcel shelf',
     navLabel: 'Boot', isCloseup: false,
     hotspots: [
-      { id: 1, zone: 'boot-lining',        x: 50, y: 58, type: 'info' },
-      { id: 2, zone: 'rear-parcel-shelf',  x: 50, y: 24, type: 'info' }
+      { id: 1, zone: 'boot-lining',       x: 50, y: 58, type: 'info' },
+      { id: 2, zone: 'rear-parcel-shelf', x: 50, y: 24, type: 'info' }
+    ]
+  },
+  // 9 — Pillars (tab + navigate dot from front cabin)
+  {
+    img: BASE + 'Shot 10.png', alt: 'A, B and C pillars — upholstery detail',
+    navLabel: 'Pillars', isCloseup: true, returnTo: S.FRONT_CABIN,
+    hotspots: [
+      { id: 1, zone: 'pillars',      x: 50, y: 45, type: 'info' },
+      { id: 2, zone: 'grab-handles', x: 70, y: 35, type: 'info' }
     ]
   }
 ];
@@ -514,40 +491,31 @@ const navBtns   = document.querySelectorAll('.cm-nav__btn');
 function goToShot(idx, fromIdx) {
   const shot = SHOTS[idx];
   if (!shot) return;
-
-  if (shot.isCloseup) {
-    previousShot = (fromIdx !== undefined) ? fromIdx : currentShot;
-  }
+  if (shot.isCloseup) previousShot = (fromIdx !== undefined) ? fromIdx : currentShot;
   currentShot = idx;
 
-  // Image
   mainImg.classList.remove('loaded');
   mainImg.src = shot.img;
   mainImg.alt = shot.alt;
-  mainImg.onload  = () => mainImg.classList.add('loaded');
+  mainImg.onload  = () => { mainImg.classList.add('loaded'); notifyHeight(); };
   mainImg.onerror = () => mainImg.classList.remove('loaded');
 
-  // Hotspots
   viewer.querySelectorAll('.cm-hotspot').forEach(h => h.remove());
   shot.hotspots.forEach(hs => {
     const wrap = document.createElement('div');
     wrap.className = 'cm-hotspot';
     wrap.style.left = hs.x + '%';
     wrap.style.top  = hs.y + '%';
-    const icon      = hs.type === 'navigate' ? '' : hs.id;
-    const hintLabel = hs.type === 'navigate' ? 'Click for close-up' : 'Click to explore';
-    wrap.innerHTML  = `
+    // Navigate dots are plain (no number), info dots show number
+    const icon = hs.type === 'navigate' ? '' : hs.id;
+    wrap.innerHTML = `
       <div class="cm-hotspot__pulse"></div>
-      <button class="cm-hotspot__core" aria-label="${ZONES[hs.zone].name}">${icon}</button>
-      <div class="cm-hotspot__tooltip">
-        <span class="cm-hotspot__tooltip-name">${ZONES[hs.zone].name}</span>
-        <span class="cm-hotspot__tooltip-hint">${hintLabel}</span>
-      </div>`;
+      <button class="cm-hotspot__core" aria-label="${ZONES[hs.zone].name}">${icon}</button>`;
     wrap.querySelector('.cm-hotspot__core').addEventListener('click', () => handleHotspot(wrap, hs));
     viewer.appendChild(wrap);
   });
 
-  // Nav tabs — highlight the matching tab
+  // Nav tab highlight
   navBtns.forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-selected'); });
   const tabIdx = shot.isCloseup ? previousShot : idx;
   const activeBtn = document.querySelector(`.cm-nav__btn[data-shot="${tabIdx}"]`);
@@ -555,8 +523,7 @@ function goToShot(idx, fromIdx) {
 
   // Back bar
   if (shot.isCloseup) {
-    const returnShot = SHOTS[previousShot];
-    backLabel.textContent = returnShot ? returnShot.navLabel : 'Front Cabin';
+    backLabel.textContent = SHOTS[previousShot] ? SHOTS[previousShot].navLabel : 'Front Cabin';
     backBar.classList.add('visible');
   } else {
     backBar.classList.remove('visible');
@@ -566,12 +533,10 @@ function goToShot(idx, fromIdx) {
 }
 
 function handleHotspot(el, hs) {
-  // Navigate — instant jump, no panel
   if (hs.type === 'navigate') {
     goToShot(hs.navigateTo, currentShot);
     return;
   }
-  // Info — toggle panel
   const wasActive = el.classList.contains('active');
   viewer.querySelectorAll('.cm-hotspot').forEach(h => h.classList.remove('active'));
   if (wasActive) { closePanel(); return; }
@@ -580,21 +545,30 @@ function handleHotspot(el, hs) {
   panelZone.textContent = ZONES[hs.zone].name;
   panelDesc.textContent = ZONES[hs.zone].desc;
   panel.classList.add('open');
-  setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
+  setTimeout(() => { panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); notifyHeight(); }, 80);
 }
 
 function closePanel() {
   panel.classList.remove('open');
   viewer.querySelectorAll('.cm-hotspot').forEach(h => h.classList.remove('active'));
+  setTimeout(notifyHeight, 300);
 }
 
-navBtns.forEach(btn => {
-  btn.addEventListener('click', () => goToShot(+btn.dataset.shot));
-});
-
+navBtns.forEach(btn => btn.addEventListener('click', () => goToShot(+btn.dataset.shot)));
 backBar.addEventListener('click', () => goToShot(previousShot));
 backBar.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') goToShot(previousShot); });
 document.getElementById('panel-close').addEventListener('click', closePanel);
+
+// Wix iframe auto-resize
+function notifyHeight() {
+  const height = document.documentElement.scrollHeight;
+  window.parent.postMessage({ type: 'iwanttobesolarge', value: height }, '*');
+}
+const resizeObserver = new ResizeObserver(() => notifyHeight());
+resizeObserver.observe(document.body);
+window.addEventListener('load', notifyHeight);
+setTimeout(notifyHeight, 500);
+setTimeout(notifyHeight, 1500);
 
 goToShot(0);
 </script>
