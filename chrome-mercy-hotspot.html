@@ -348,7 +348,7 @@ const ZONES = {
   'driving-controls': { name: 'Driving Controls',       desc: 'Paddle shifters, indicator stalks, wiper controls and button surfaces wrapped or finished in leather and alcantara bring the entire cockpit into the design language of the interior.' }
 };
 
-// File mapping: Shot_6.png is the front cabin wide, Shot_1.png is steering wheel closeup, etc.
+// File mapping: Shot%206.png is the front cabin wide, Shot%201.png is steering wheel closeup, etc.
 // Shot_6 = Front cabin wide (Shot 1 brief)
 // Shot_5 = Driver's POV headliner (Shot 2 brief)
 // Shot_4 = Rear cabin (Shot 3 brief)
@@ -357,7 +357,7 @@ const ZONES = {
 // Shot_1 = Steering wheel closeup (Shot 6 brief)
 
 const SHOTS = [
-  // --- FRONT CABIN WIDE (Shot_6.png) ---
+  // --- FRONT CABIN WIDE (Shot%206.png) ---
   // RHD: driver on right, passenger on left. Door open on left. 
   // Front seat centre: ~62% x, 68% y
   // Left door card (passenger side, large brown panel): ~10% x, 60% y
@@ -365,7 +365,7 @@ const SHOTS = [
   // Dashboard (long tan shelf across top): ~45% x, 35% y
   // Centre console (gear shifter, armrest, spine): ~50% x, 75% y
   {
-    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot_6.png',
+    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot%206.png',
     alt: 'Front cabin — passenger door open, both seats, dashboard, steering wheel, centre console',
     hotspots: [
       { id: 1, zone: 'front-seats',      x: 62, y: 65 },
@@ -375,7 +375,7 @@ const SHOTS = [
       { id: 5, zone: 'centre-console',   x: 50, y: 76 }
     ]
   },
-  // --- DRIVER'S POV / HEADLINER (Shot_5.png) ---
+  // --- DRIVER'S POV / HEADLINER (Shot%205.png) ---
   // Dark alcantara headliner fills top ~40% of frame
   // Roof console (black unit with controls, centre top): ~50% x, 30% y
   // Sun visor (left side, folded against headliner): ~25% x, 28% y
@@ -383,7 +383,7 @@ const SHOTS = [
   // Dashboard (long tan band mid-frame): ~50% x, 68% y
   // Headliner (large dark surface): ~55% x, 18% y
   {
-    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot_5.png',
+    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot%205.png',
     alt: 'Driver\'s POV — headliner, sun visors, roof console, pillars, rear view mirror',
     hotspots: [
       { id: 1, zone: 'headliner',    x: 56, y: 16 },
@@ -393,14 +393,14 @@ const SHOTS = [
       { id: 5, zone: 'dashboard',    x: 48, y: 68 }
     ]
   },
-  // --- REAR CABIN (Shot_4.png) ---
+  // --- REAR CABIN (Shot%204.png) ---
   // Rear seats fill the middle — tan leather + dark alcantara panels
   // Left seatbelt strap runs diagonally from upper-left: ~22% x, 28% y
   // Right seatbelt strap on right pillar: ~72% x, 30% y — use single hotspot at left belt
   // C-pillar / door card area (right side, dark panel): ~80% x, 55% y
   // Centre rear seat body: ~50% x, 60% y
   {
-    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot_4.png',
+    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot%204.png',
     alt: 'Rear cabin — rear seats, rear door cards, C pillars, seatbelts',
     hotspots: [
       { id: 1, zone: 'rear-seats',      x: 50, y: 62 },
@@ -408,37 +408,37 @@ const SHOTS = [
       { id: 3, zone: 'door-cards-rear', x: 78, y: 55 }
     ]
   },
-  // --- FOOTWELL & FLOOR (Shot_3.png) ---
+  // --- FOOTWELL & FLOOR (Shot%203.png) ---
   // Dark carpet mat with PORSCHE text, centre of frame
   // Sill plate / kick panel along bottom edge (silver "911 Carrera S" sill): ~30% x, 85% y
   // Carpet mat centre: ~55% x, 58% y
   {
-    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot_3.png',
+    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot%203.png',
     alt: 'Footwell and floor — carpet, kick panels, sill plates, floor mats',
     hotspots: [
       { id: 1, zone: 'carpet',      x: 56, y: 55 },
       { id: 2, zone: 'kick-panels', x: 30, y: 84 }
     ]
   },
-  // --- BOOT OPEN (Shot_2.png) ---
+  // --- BOOT OPEN (Shot%202.png) ---
   // Boot interior: dark alcantara lining fills the rectangular aperture
   // Tan leather surround trim around aperture edge: visible all around
   // Boot lining (dark interior floor/walls): ~50% x, 52% y
   // Parcel shelf area = top of boot aperture / lid underside above: ~50% x, 22% y
   {
-    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot_2.png',
+    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot%202.png',
     alt: 'Boot open — boot floor, side trims, parcel shelf',
     hotspots: [
       { id: 1, zone: 'boot-lining',         x: 50, y: 58 },
       { id: 2, zone: 'rear-parcel-shelf',   x: 50, y: 24 }
     ]
   },
-  // --- STEERING WHEEL CLOSEUP (Shot_1.png) ---
+  // --- STEERING WHEEL CLOSEUP (Shot%201.png) ---
   // Full-frame steering wheel — tan leather rim, dark alcantara hub/spokes
   // Steering wheel rim (upper arc, tan leather): ~50% x, 14% y
   // Driving controls (column stalks left side, drive mode dial right of column): ~72% x, 62% y
   {
-    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot_1.png',
+    img: 'https://elise-beep.github.io/chrome-mercy-assets/Shot%201.png',
     alt: 'Steering wheel and instrument cluster close-up',
     hotspots: [
       { id: 1, zone: 'steering-wheel',   x: 50, y: 14 },
