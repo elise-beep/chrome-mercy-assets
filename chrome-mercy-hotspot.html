@@ -381,14 +381,15 @@
   <nav class="cm-nav" role="tablist" id="main-nav">
     <button class="cm-nav__btn active" data-shot="0" role="tab">Front Cabin</button>
     <button class="cm-nav__btn" data-shot="1" role="tab">Seats</button>
-    <button class="cm-nav__btn" data-shot="2" role="tab">Steering Wheel</button>
-    <button class="cm-nav__btn" data-shot="3" role="tab">Dashboard</button>
-    <button class="cm-nav__btn" data-shot="4" role="tab">Door Card</button>
-    <button class="cm-nav__btn" data-shot="5" role="tab">Headliner</button>
+    <button class="cm-nav__btn" data-shot="2" role="tab">Door Card</button>
+    <button class="cm-nav__btn" data-shot="3" role="tab">Steering Wheel</button>
+    <button class="cm-nav__btn" data-shot="4" role="tab">Dashboard</button>
+    <button class="cm-nav__btn" data-shot="5" role="tab">Console</button>
     <button class="cm-nav__btn" data-shot="6" role="tab">Pillars</button>
-    <button class="cm-nav__btn" data-shot="7" role="tab">Footwell</button>
-    <button class="cm-nav__btn" data-shot="8" role="tab">Rear Seats</button>
-    <button class="cm-nav__btn" data-shot="9" role="tab">Boot</button>
+    <button class="cm-nav__btn" data-shot="7" role="tab">Headliner</button>
+    <button class="cm-nav__btn" data-shot="8" role="tab">Footwell</button>
+    <button class="cm-nav__btn" data-shot="9" role="tab">Rear Cabin</button>
+    <button class="cm-nav__btn" data-shot="10" role="tab">Boot</button>
   </nav>
 
   <div class="cm-back-bar" id="back-bar" role="button" tabindex="0" aria-label="Return to Front Cabin">
@@ -433,15 +434,16 @@ const BASE = 'https://elise-beep.github.io/chrome-mercy-assets/';
 const S = {
   FRONT_CABIN:    0,
   SEATS:          1,
-  STEERING_WHEEL: 2,
-  DASHBOARD:      3,
-  DOOR_CARD:      4,
-  HEADLINER:      5,
+  DOOR_CARD:      2,
+  STEERING_WHEEL: 3,
+  DASHBOARD:      4,
+  CONSOLE:        5,
   PILLARS:        6,
-  FOOTWELL:       7,
-  REAR_SEATS:     8,
-  BOOT:           9
-};
+  HEADLINER:      7,
+  FOOTWELL:       8,
+  REAR_SEATS:     9,
+  BOOT:          10
+}
 
 const ZONES = {
   'front-seats':      { name: 'Front Seats',        desc: 'The focal point of every interior transformation. Chrome Mercy works with full-grain leather, alcantara, and suede — each seat sculpted with bespoke stitching patterns, channel quilting, or panel inlays unique to every commission.' },
@@ -465,21 +467,22 @@ const ZONES = {
 };
 
 const SHOTS = [
-  // 0 — Front Cabin (hub) — 7 navigate dots to shots 1–6 (incl. Pillars), no rear seats or boot
+  // 0 — Front Cabin (hub) — Shot 1 — navigate dots to all detail shots except rear seats & boot
   {
     img: BASE + 'Shot 1.png', alt: 'Front cabin wide',
     navLabel: 'Front Cabin', isCloseup: false,
     hotspots: [
-      { id: 1, zone: 'front-seats',      x: 60, y: 68, type: 'navigate', navigateTo: S.SEATS },
-      { id: 2, zone: 'steering-wheel',   x: 60, y: 31, type: 'navigate', navigateTo: S.STEERING_WHEEL },
-      { id: 3, zone: 'dashboard',        x: 33, y: 38, type: 'navigate', navigateTo: S.DASHBOARD },
-      { id: 4, zone: 'door-cards-front', x: 88, y: 42, type: 'navigate', navigateTo: S.DOOR_CARD },
-      { id: 5, zone: 'headliner',        x: 75, y: 8,  type: 'navigate', navigateTo: S.HEADLINER },
-      { id: 6, zone: 'pillars',          x: 30, y: 18, type: 'navigate', navigateTo: S.PILLARS },
-      { id: 7, zone: 'carpet',           x: 28, y: 72, type: 'navigate', navigateTo: S.FOOTWELL }
+      { id: 1, zone: 'front-seats',      x: 52, y: 69, type: 'navigate', navigateTo: S.SEATS },
+      { id: 2, zone: 'steering-wheel',   x: 47, y: 32, type: 'navigate', navigateTo: S.STEERING_WHEEL },
+      { id: 3, zone: 'dashboard',        x: 26, y: 37, type: 'navigate', navigateTo: S.DASHBOARD },
+      { id: 4, zone: 'door-cards-front', x: 63, y: 32, type: 'navigate', navigateTo: S.DOOR_CARD },
+      { id: 5, zone: 'headliner',        x: 74, y: 6,  type: 'navigate', navigateTo: S.HEADLINER },
+      { id: 6, zone: 'pillars',          x: 54, y: 15, type: 'navigate', navigateTo: S.PILLARS },
+      { id: 7, zone: 'carpet',           x: 26, y: 69, type: 'navigate', navigateTo: S.FOOTWELL },
+      { id: 8, zone: 'centre-console',   x: 62, y: 51, type: 'navigate', navigateTo: S.CONSOLE }
     ]
   },
-  // 1 — Seats close-up (Shot 2)
+  // 1 — Seats — Shot 2
   {
     img: BASE + 'Shot 2.png', alt: 'Front and rear seat upholstery detail',
     navLabel: 'Seats', isCloseup: true, returnTo: S.FRONT_CABIN,
@@ -488,7 +491,15 @@ const SHOTS = [
       { id: 2, zone: 'rear-seats',  x: 70, y: 55, type: 'info' }
     ]
   },
-  // 2 — Steering Wheel close-up (Shot 3)
+  // 2 — Door Card — Shot 5
+  {
+    img: BASE + 'Shot 5.png', alt: 'Front door card close-up',
+    navLabel: 'Door Card', isCloseup: true, returnTo: S.FRONT_CABIN,
+    hotspots: [
+      { id: 1, zone: 'door-cards-front', x: 50, y: 45, type: 'info' }
+    ]
+  },
+  // 3 — Steering Wheel — Shot 3
   {
     img: BASE + 'Shot 3.png', alt: 'Steering wheel and instrument cluster',
     navLabel: 'Steering Wheel', isCloseup: true, returnTo: S.FRONT_CABIN,
@@ -497,35 +508,23 @@ const SHOTS = [
       { id: 2, zone: 'driving-controls', x: 72, y: 62, type: 'info' }
     ]
   },
-  // 3 — Dashboard close-up (Shot 4)
+  // 4 — Dashboard — Shot 4
   {
     img: BASE + 'Shot 4.png', alt: 'Dashboard and upper surfaces',
     navLabel: 'Dashboard', isCloseup: true, returnTo: S.FRONT_CABIN,
     hotspots: [
-      { id: 1, zone: 'dashboard',      x: 50, y: 40, type: 'info' },
-      { id: 2, zone: 'centre-console', x: 55, y: 70, type: 'info' }
+      { id: 1, zone: 'dashboard', x: 50, y: 40, type: 'info' }
     ]
   },
-  // 4 — Door Card close-up (Shot 5)
+  // 5 — Console — Shot 11
   {
-    img: BASE + 'Shot 5.png', alt: 'Front door card close-up',
-    navLabel: 'Door Card', isCloseup: true, returnTo: S.FRONT_CABIN,
+    img: BASE + 'Shot 11.png', alt: 'Centre console — armrest, gear surround, storage',
+    navLabel: 'Console', isCloseup: true, returnTo: S.FRONT_CABIN,
     hotspots: [
-      { id: 1, zone: 'door-cards-front', x: 50, y: 45, type: 'info' }
+      { id: 1, zone: 'centre-console', x: 50, y: 50, type: 'info' }
     ]
   },
-  // 5 — Headliner / Driver's POV (Shot 6)
-  {
-    img: BASE + 'Shot 6.png', alt: 'Driver\'s POV — headliner, sun visors, roof console, pillars',
-    navLabel: 'Headliner', isCloseup: true, returnTo: S.FRONT_CABIN,
-    hotspots: [
-      { id: 1, zone: 'headliner',    x: 56, y: 16, type: 'info' },
-      { id: 2, zone: 'roof-console', x: 50, y: 32, type: 'info' },
-      { id: 3, zone: 'sun-visors',   x: 27, y: 38, type: 'info' },
-      { id: 4, zone: 'pillars',      x: 9,  y: 55, type: 'info' }
-    ]
-  },
-  // 6 — Pillars (Shot 10) — now sits directly after Headliner
+  // 6 — Pillars — Shot 10
   {
     img: BASE + 'Shot 10.png', alt: 'A, B and C pillars — upholstery detail',
     navLabel: 'Pillars', isCloseup: true, returnTo: S.FRONT_CABIN,
@@ -534,7 +533,17 @@ const SHOTS = [
       { id: 2, zone: 'grab-handles', x: 70, y: 35, type: 'info' }
     ]
   },
-  // 7 — Footwell (Shot 7)
+  // 7 — Headliner — Shot 6
+  {
+    img: BASE + 'Shot 6.png', alt: 'Driver\'s POV — headliner, sun visors, roof console, pillars',
+    navLabel: 'Headliner', isCloseup: true, returnTo: S.FRONT_CABIN,
+    hotspots: [
+      { id: 1, zone: 'headliner',    x: 56, y: 16, type: 'info' },
+      { id: 2, zone: 'roof-console', x: 50, y: 32, type: 'info' },
+      { id: 3, zone: 'sun-visors',   x: 27, y: 38, type: 'info' }
+    ]
+  },
+  // 8 — Footwell — Shot 7
   {
     img: BASE + 'Shot 7.png', alt: 'Footwell and floor — carpet, kick panels',
     navLabel: 'Footwell', isCloseup: true, returnTo: S.FRONT_CABIN,
@@ -543,17 +552,17 @@ const SHOTS = [
       { id: 2, zone: 'kick-panels', x: 30, y: 84, type: 'info' }
     ]
   },
-  // 8 — Rear Seats (Shot 8) — tab only
+  // 9 — Rear Seats — Shot 8 — tab only
   {
     img: BASE + 'Shot 8.png', alt: 'Rear cabin — rear seats, door cards, seatbelts',
-    navLabel: 'Rear Seats', isCloseup: false,
+    navLabel: 'Rear Cabin', isCloseup: false,
     hotspots: [
       { id: 1, zone: 'rear-seats',      x: 50, y: 62, type: 'info' },
       { id: 2, zone: 'seatbelts',       x: 23, y: 32, type: 'info' },
       { id: 3, zone: 'door-cards-rear', x: 78, y: 55, type: 'info' }
     ]
   },
-  // 9 — Boot (Shot 9) — tab only
+  // 10 — Boot — Shot 9 — tab only
   {
     img: BASE + 'Shot 9.png', alt: 'Boot open — boot lining, parcel shelf',
     navLabel: 'Boot', isCloseup: false,
