@@ -213,6 +213,35 @@
     60%       { transform: scale(1.6); opacity: 0; }
   }
 
+  /* Hover label */
+  .cm-hotspot__label {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: rgba(0,0,0,0.9);
+    border: 1px solid var(--border-strong);
+    padding: 7px 13px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    backdrop-filter: blur(8px);
+    z-index: 20;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-white);
+    line-height: 1.2;
+  }
+  .cm-hotspot:hover .cm-hotspot__label,
+  .cm-hotspot:focus-within .cm-hotspot__label {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  @media (max-width: 600px) { .cm-hotspot__label { display: none; } }
+
+
   /* Info Panel */
   .cm-panel {
     background: var(--bg-panel);
@@ -441,13 +470,13 @@ const SHOTS = [
     img: BASE + 'Shot 1.png', alt: 'Front cabin wide',
     navLabel: 'Front Cabin', isCloseup: false,
     hotspots: [
-      { id: 1, zone: 'front-seats',      x: 62, y: 65, type: 'navigate', navigateTo: S.SEATS },
-      { id: 2, zone: 'steering-wheel',   x: 76, y: 50, type: 'navigate', navigateTo: S.STEERING_WHEEL },
-      { id: 3, zone: 'dashboard',        x: 44, y: 33, type: 'navigate', navigateTo: S.DASHBOARD },
-      { id: 4, zone: 'door-cards-front', x: 10, y: 60, type: 'navigate', navigateTo: S.DOOR_CARD },
-      { id: 5, zone: 'headliner',        x: 52, y: 12, type: 'navigate', navigateTo: S.HEADLINER },
-      { id: 6, zone: 'pillars',          x: 18, y: 35, type: 'navigate', navigateTo: S.PILLARS },
-      { id: 7, zone: 'carpet',           x: 50, y: 85, type: 'navigate', navigateTo: S.FOOTWELL }
+      { id: 1, zone: 'front-seats',      x: 60, y: 68, type: 'navigate', navigateTo: S.SEATS },
+      { id: 2, zone: 'steering-wheel',   x: 60, y: 31, type: 'navigate', navigateTo: S.STEERING_WHEEL },
+      { id: 3, zone: 'dashboard',        x: 33, y: 38, type: 'navigate', navigateTo: S.DASHBOARD },
+      { id: 4, zone: 'door-cards-front', x: 88, y: 42, type: 'navigate', navigateTo: S.DOOR_CARD },
+      { id: 5, zone: 'headliner',        x: 75, y: 8,  type: 'navigate', navigateTo: S.HEADLINER },
+      { id: 6, zone: 'pillars',          x: 30, y: 18, type: 'navigate', navigateTo: S.PILLARS },
+      { id: 7, zone: 'carpet',           x: 28, y: 72, type: 'navigate', navigateTo: S.FOOTWELL }
     ]
   },
   // 1 — Seats close-up (Shot 2)
@@ -571,9 +600,13 @@ function goToShot(idx, fromIdx) {
     wrap.style.top  = hs.y + '%';
     // Navigate dots are plain (no number), info dots show number
     const icon = hs.type === 'navigate' ? '' : hs.id;
+    const labelText = (hs.type === 'navigate' && SHOTS[hs.navigateTo])
+      ? SHOTS[hs.navigateTo].navLabel
+      : ZONES[hs.zone].name;
     wrap.innerHTML = `
       <div class="cm-hotspot__pulse"></div>
-      <button class="cm-hotspot__core" aria-label="${ZONES[hs.zone].name}">${icon}</button>`;
+      <button class="cm-hotspot__core" aria-label="${labelText}">${icon}</button>
+      <div class="cm-hotspot__label">${labelText}</div>`;
     wrap.querySelector('.cm-hotspot__core').addEventListener('click', () => handleHotspot(wrap, hs));
     viewer.appendChild(wrap);
   });
