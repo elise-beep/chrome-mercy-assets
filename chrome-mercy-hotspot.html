@@ -30,7 +30,7 @@
     --font-body:     'Inter', sans-serif;
   }
 
-  html, body {
+html, body {
     background: var(--bg);
     color: var(--text-primary);
     font-family: var(--font-body);
@@ -75,16 +75,19 @@
   }
 
   /* Divider */
-  .cm-divider { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
-  .cm-divider__line { flex: 1; height: 1px; background: var(--border); }
-  .cm-divider__mark { width: 5px; height: 5px; background: var(--accent-bright); transform: rotate(45deg); flex-shrink: 0; }
+  .cm-divider { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+  .cm-divider__line {
+    flex: 1; height: 0;
+    border-top: 1px dashed var(--border-strong);  /* saddle-stitch hairline */
+  }
+  .cm-divider__arch { width: 30px; height: 30px; color: var(--accent-bright); flex-shrink: 0; }
 
   /* Nav */
   .cm-nav {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px dashed var(--border-strong);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -141,7 +144,26 @@
   }
 
   /* Viewer */
-  .cm-viewer { position: relative; background: #000; overflow: hidden; line-height: 0; min-height: 220px; }
+  .cm-viewer {
+    position: relative;
+    background: #000;
+    overflow: hidden;
+    line-height: 0;
+    min-height: 220px;
+    border: 1px solid var(--border);
+    box-shadow: inset 0 0 0 3px rgba(0,0,0,0.6), inset 0 0 0 4px var(--border);
+  }
+  /* engraved tracery corners */
+  .cm-viewer::before, .cm-viewer::after {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    border: 1px solid var(--accent-border);
+    z-index: 15;
+    pointer-events: none;
+  }
+  .cm-viewer::before { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+  .cm-viewer::after  { bottom: 8px; right: 8px; border-left: none; border-top: none; }
   .cm-viewer.img-error::after {
     content: 'Image loading…';
     position: absolute;
@@ -182,12 +204,29 @@
     height: 100%;
   }
 
+  /* Instrument ring — fine outer bezel with tick marks */
   .cm-hotspot__pulse {
     position: absolute;
     inset: 0;
     border-radius: 50%;
     border: 1px solid rgba(58,140,82,0.7);
     animation: hs-pulse 3s ease-in-out infinite;
+  }
+  /* tick marks around the bezel, drawn with a conic mask */
+  .cm-hotspot__dot::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 50%;
+    background:
+      repeating-conic-gradient(
+        var(--accent-bright) 0deg 1.2deg,
+        transparent 1.2deg 30deg
+      );
+    -webkit-mask: radial-gradient(circle, transparent 0 44%, #000 44% 50%, transparent 50%);
+            mask: radial-gradient(circle, transparent 0 44%, #000 44% 50%, transparent 50%);
+    opacity: 0.5;
+    pointer-events: none;
   }
   .cm-hotspot__core {
     position: absolute;
@@ -200,20 +239,20 @@
     font-family: var(--font-body);
     font-size: 11px;
     font-weight: 500;
-    color: #fff;
-    border: none;
+    color: var(--text-white);
+    border: 1px solid rgba(184,145,92,0.5);  /* brass bezel ring */
     cursor: pointer;
     transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 2px 14px rgba(58,140,82,0.45);
+    box-shadow: 0 2px 14px rgba(58,140,82,0.45), inset 0 1px 2px rgba(255,255,255,0.12);
   }
-  .cm-hotspot__core:hover { background: #4daa68; transform: scale(1.15); }
+  .cm-hotspot__core:hover { background: #4daa68; transform: scale(1.12); }
   .cm-hotspot.active .cm-hotspot__core {
     background: #fff;
     color: var(--accent);
     transform: scale(1.15);
     box-shadow: 0 2px 20px rgba(255,255,255,0.3);
   }
-  .cm-hotspot.active .cm-hotspot__pulse { border-color: rgba(255,255,255,0.25); animation: none; }
+  .cm-hotspot.active .cm-hotspot__pulse { border-color: rgba(184,145,92,0.5); animation: none; }
 
   @keyframes hs-pulse {
     0%, 100% { transform: scale(1); opacity: 0.7; }
@@ -322,6 +361,12 @@
   }
   .cm-panel__close:hover { color: var(--accent-bright); border-color: var(--accent-border); }
 
+  /* Footer stitch line */
+  .cm-footer-line {
+    margin-top: 32px;
+    border-top: 1px dashed var(--border-strong);
+  }
+
   /* Hint */
   .cm-hint {
     margin-top: 20px;
@@ -340,40 +385,6 @@
     .cm-panel__inner { padding: 16px 14px; }
   }
 
-  /* Call to action */
-  .cm-cta {
-    margin-top: 36px;
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
-    text-align: center;
-  }
-  .cm-cta__line {
-    font-family: var(--font-heading);
-    font-style: italic;
-    font-size: clamp(18px, 2.4vw, 24px);
-    font-weight: 400;
-    color: var(--text-white);
-    margin-bottom: 18px;
-    line-height: 1.3;
-  }
-  .cm-cta__btn {
-    display: inline-block;
-    font-family: var(--font-body);
-    font-weight: 400;
-    font-size: 11px;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--accent-bright);
-    text-decoration: none;
-    padding: 14px 34px;
-    border: 1px solid var(--accent-border);
-    transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
-  }
-  .cm-cta__btn:hover {
-    background: var(--accent-bright);
-    border-color: var(--accent-bright);
-    color: #000;
-  }
 </style>
 </head>
 <body>
@@ -387,7 +398,13 @@
 
   <div class="cm-divider">
     <div class="cm-divider__line"></div>
-    <div class="cm-divider__mark"></div>
+    <svg class="cm-divider__arch" viewBox="0 0 40 40" aria-hidden="true">
+      <g fill="none" stroke="currentColor">
+        <path d="M20 1 L33 20 L20 39 L7 20 Z" stroke-width="1"/>
+        <path d="M20 7 L28 20 L20 33 L12 20 Z" stroke-width="0.6" opacity="0.55"/>
+      </g>
+      <circle cx="20" cy="20" r="1.4" fill="currentColor"/>
+    </svg>
     <div class="cm-divider__line"></div>
   </div>
 
@@ -435,16 +452,7 @@
 
   <p class="cm-hint">Click the markers to explore</p>
 
-  <!-- ───────────────────────────────────────────────────────────
-       CTA: change the href below to your enquiry / contact page URL.
-       target="_top" makes the link open in the main Wix page,
-       not inside the embedded frame.
-       ─────────────────────────────────────────────────────────── -->
-  <div class="cm-cta">
-    <div class="cm-cta__line">Every interior is a bespoke commission.</div>
-    <a class="cm-cta__btn" href="#contact" target="_top">Begin Your Commission</a>
-  </div>
-
+  <div class="cm-footer-line"></div>
 
 </div>
 
