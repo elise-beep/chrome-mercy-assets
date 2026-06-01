@@ -361,6 +361,94 @@ html, body {
   }
   .cm-panel__close:hover { color: var(--accent-bright); border-color: var(--accent-border); }
 
+  /* ── Details view ── */
+  .cm-details { display: none; }
+  .cm-details.active { display: block; }
+  .cm-details__intro {
+    text-align: center;
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: clamp(18px, 2.4vw, 26px);
+    font-weight: 400;
+    color: var(--text-white);
+    margin: 28px 0 30px;
+    line-height: 1.3;
+  }
+  .cm-acc { border-top: 1px dashed var(--border-strong); }
+  .cm-acc__item { border-bottom: 1px dashed var(--border-strong); }
+  .cm-acc__head {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 8px;
+    text-align: left;
+    transition: color 0.3s ease;
+  }
+  .cm-acc__head:hover { color: var(--accent-bright); }
+  .cm-acc__title {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: clamp(19px, 2.4vw, 25px);
+    font-weight: 400;
+    color: var(--text-white);
+    line-height: 1.2;
+    transition: color 0.3s ease;
+  }
+  .cm-acc__head:hover .cm-acc__title { color: var(--accent-bright); }
+  .cm-acc__sign {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    position: relative;
+    color: var(--accent-bright);
+  }
+  .cm-acc__sign::before, .cm-acc__sign::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
+  }
+  .cm-acc__sign::before { top: 50%; left: 0; width: 100%; height: 1px; transform: translateY(-50%); }
+  .cm-acc__sign::after  { left: 50%; top: 0; height: 100%; width: 1px; transform: translateX(-50%); }
+  .cm-acc__item.open .cm-acc__sign::after { transform: translateX(-50%) scaleY(0); opacity: 0; }
+  .cm-acc__body {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
+  }
+  .cm-acc__item.open .cm-acc__body { max-height: 600px; opacity: 1; }
+  .cm-acc__list {
+    list-style: none;
+    padding: 0 8px 26px;
+    margin: 0;
+    columns: 2;
+    column-gap: 36px;
+  }
+  @media (max-width: 600px) { .cm-acc__list { columns: 1; } }
+  .cm-acc__list li {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    padding: 7px 0 7px 18px;
+    position: relative;
+    break-inside: avoid;
+  }
+  .cm-acc__list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 13px;
+    width: 4px; height: 4px;
+    background: var(--accent-bright);
+    transform: rotate(45deg);
+  }
+
   /* Footer stitch line */
   .cm-footer-line {
     margin-top: 32px;
@@ -391,7 +479,7 @@ html, body {
 <div class="cm-tool">
 
   <div class="cm-header">
-    <div class="cm-header__eyebrow">2022 Porsche 911 · 992 Series · Right Hand Drive</div>
+    <div class="cm-header__eyebrow">Building Impossible Interiors</div>
     <h1 class="cm-header__title">Reimagine Your Interior</h1>
     <div class="cm-header__subtitle">See what's possible across every surface of your cabin</div>
   </div>
@@ -409,17 +497,9 @@ html, body {
   </div>
 
   <nav class="cm-nav" role="tablist" id="main-nav">
-    <button class="cm-nav__btn active" data-shot="0" role="tab">Front Cabin</button>
-    <button class="cm-nav__btn" data-shot="1" role="tab">Seats</button>
-    <button class="cm-nav__btn" data-shot="2" role="tab">Door Card</button>
-    <button class="cm-nav__btn" data-shot="3" role="tab">Steering Wheel</button>
-    <button class="cm-nav__btn" data-shot="4" role="tab">Dashboard</button>
-    <button class="cm-nav__btn" data-shot="5" role="tab">Console</button>
-    <button class="cm-nav__btn" data-shot="6" role="tab">Pillars</button>
-    <button class="cm-nav__btn" data-shot="7" role="tab">Headliner</button>
-    <button class="cm-nav__btn" data-shot="8" role="tab">Footwell</button>
-    <button class="cm-nav__btn" data-shot="9" role="tab">Rear Cabin</button>
-    <button class="cm-nav__btn" data-shot="10" role="tab">Boot</button>
+    <button class="cm-nav__btn active" data-view="front" role="tab">Front Cabin</button>
+    <button class="cm-nav__btn" data-view="rear" role="tab">Rear Cabin</button>
+    <button class="cm-nav__btn" data-view="details" role="tab">Details</button>
   </nav>
 
   <div class="cm-back-bar" id="back-bar" role="button" tabindex="0" aria-label="Return to Front Cabin">
@@ -450,7 +530,13 @@ html, body {
     </div>
   </div>
 
-  <p class="cm-hint">Click the markers to explore</p>
+  <p class="cm-hint" id="explorer-hint">Click the markers to explore</p>
+
+  <!-- ── DETAILS VIEW ── -->
+  <div class="cm-details" id="details-view">
+    <p class="cm-details__intro">Where upholstery ends, our work continues.</p>
+    <div class="cm-acc" id="acc"></div>
+  </div>
 
   <div class="cm-footer-line"></div>
 
@@ -470,7 +556,9 @@ const S = {
   HEADLINER:      7,
   FOOTWELL:       8,
   REAR_SEATS:     9,
-  BOOT:          10
+  BOOT:          10,
+  SEATBELTS:      11,
+  REAR_DOOR_CARD: 12
 }
 
 const ZONES = {
@@ -493,6 +581,53 @@ const ZONES = {
   'rear-parcel-shelf':{ name: 'Rear Parcel Shelf',   desc: 'The parcel shelf is visible from outside the car through the rear glass — it is part of the first impression. Upholstered in matching alcantara or leather it completes the interior story from every angle.' },
   'grab-handles':     { name: 'Grab Handles',        desc: 'Small in scale, significant in effect. Upholstered grab handles in matching leather or alcantara complete the interior at the detail level — the level at which a discerning eye measures true craftsmanship.' }
 };
+
+
+const DETAILS = [
+  {
+    title: 'Advanced Leather Techniques',
+    items: [
+      'Quilted pattern embroidery',
+      'Quilted pattern, perforation & stitching',
+      'Laser leather etching, cutting & inlay',
+      'Heat stamping (embossing & debossing)',
+      'Embroidery',
+      'Leather UV printing',
+      'Bespoke leather finishes — hand-woven, embossed, colour-matched, printed'
+    ]
+  },
+  {
+    title: 'Metal, Plastic & Composite Fabrication',
+    items: [
+      'Custom medallions (metal & plastic)',
+      'CNC billet components',
+      'Fibreglass, carbon fibre & Kevlar composite work',
+      'Hydro dipping, polishing, anodising, powder coating & custom painting',
+      'Metal & plastic chrome plating',
+      'Real wood restoration'
+    ]
+  },
+  {
+    title: 'Tech & Upgrades',
+    items: [
+      '3D scanning',
+      'CAD design — custom redesigns or replication',
+      'Large format 3D parts printing',
+      'Audio upgrades',
+      'Sound & heat deadening solutions',
+      'Dash cams',
+      'Ambient lighting installations'
+    ]
+  },
+  {
+    title: 'Restoration & Specialist Work',
+    items: [
+      'Engine parts restoration — vapour blasting, laser cleaning, sand blasting',
+      'Leather repair & painting',
+      'Plastic repairs & painting'
+    ]
+  }
+];
 
 const SHOTS = [
   // 0 — Front Cabin (hub) — Shot 1 — navigate dots to all detail shots except rear seats & boot
@@ -580,23 +715,41 @@ const SHOTS = [
       { id: 2, zone: 'kick-panels', x: 30, y: 84, type: 'info' }
     ]
   },
-  // 9 — Rear Seats — Shot 8 — tab only
+  // 9 — Rear Cabin (hub) — Shot 8 — navigate dots like Front Cabin
   {
     img: BASE + 'Shot 8.png', alt: 'Rear cabin — rear seats, door cards, seatbelts',
     navLabel: 'Rear Cabin', isCloseup: false,
     hotspots: [
-      { id: 1, zone: 'rear-seats',      x: 50, y: 62, type: 'info' },
-      { id: 2, zone: 'seatbelts',       x: 23, y: 32, type: 'info' },
-      { id: 3, zone: 'door-cards-rear', x: 78, y: 55, type: 'info' }
+      { id: 1, zone: 'rear-seats',      x: 45, y: 33, type: 'info' },
+      { id: 2, zone: 'seatbelts',       x: 64, y: 31, type: 'navigate', navigateTo: S.SEATBELTS },
+      { id: 3, zone: 'door-cards-rear', x: 82, y: 39, type: 'navigate', navigateTo: S.REAR_DOOR_CARD },
+      { id: 4, zone: 'boot-lining',     x: 32, y: 17, type: 'navigate', navigateTo: S.BOOT }
     ]
   },
-  // 10 — Boot — Shot 9 — tab only
+
+  // 10 — Boot — Shot 9 — close-up, returns to Rear Cabin
   {
     img: BASE + 'Shot 9.png', alt: 'Boot open — boot lining, parcel shelf',
-    navLabel: 'Boot', isCloseup: false,
+    navLabel: 'Boot', isCloseup: true, returnTo: S.REAR_SEATS,
     hotspots: [
       { id: 1, zone: 'boot-lining',       x: 50, y: 58, type: 'info' },
       { id: 2, zone: 'rear-parcel-shelf', x: 50, y: 24, type: 'info' }
+    ]
+  },
+  // 11 — Seatbelts close-up — Shot 12 — returns to Rear Cabin
+  {
+    img: BASE + 'Shot 12.png', alt: 'Seatbelt detail',
+    navLabel: 'Seatbelts', isCloseup: true, returnTo: S.REAR_SEATS,
+    hotspots: [
+      { id: 1, zone: 'seatbelts', x: 50, y: 45, type: 'info' }
+    ]
+  },
+  // 12 — Rear Door Card close-up — Shot 13 — returns to Rear Cabin
+  {
+    img: BASE + 'Shot 13.png', alt: 'Rear door card close-up',
+    navLabel: 'Door Card (Rear)', isCloseup: true, returnTo: S.REAR_SEATS,
+    hotspots: [
+      { id: 1, zone: 'door-cards-rear', x: 50, y: 45, type: 'info' }
     ]
   }
 ];
@@ -669,8 +822,9 @@ function goToShot(idx, fromIdx) {
 
   // Nav tab highlight
   navBtns.forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-selected'); });
-  const tabIdx = shot.isCloseup ? previousShot : idx;
-  const activeBtn = document.querySelector(`.cm-nav__btn[data-shot="${tabIdx}"]`);
+  const rearShots = [S.REAR_SEATS, S.BOOT, S.SEATBELTS, S.REAR_DOOR_CARD];
+  const hubView = rearShots.includes(shot.isCloseup ? previousShot : idx) ? 'rear' : 'front';
+  const activeBtn = document.querySelector(`.cm-nav__btn[data-view="${hubView}"]`);
   if (activeBtn) { activeBtn.classList.add('active'); activeBtn.setAttribute('aria-selected','true'); }
 
   // Back bar
@@ -709,7 +863,34 @@ function closePanel() {
   setTimeout(notifyHeight, 300);
 }
 
-navBtns.forEach(btn => btn.addEventListener('click', () => goToShot(+btn.dataset.shot)));
+// View switching: front / rear / details
+const explorerEls = [viewer, panel, document.getElementById('explorer-hint'), backBar];
+const detailsView = document.getElementById('details-view');
+
+function showView(view) {
+  navBtns.forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-selected'); });
+  const btn = document.querySelector(`.cm-nav__btn[data-view="${view}"]`);
+  if (btn) { btn.classList.add('active'); btn.setAttribute('aria-selected','true'); }
+
+  if (view === 'details') {
+    // Hide explorer, show details accordion
+    viewer.style.display = 'none';
+    panel.style.display = 'none';
+    document.getElementById('explorer-hint').style.display = 'none';
+    backBar.classList.remove('visible');
+    detailsView.classList.add('active');
+    closePanel();
+  } else {
+    viewer.style.display = '';
+    panel.style.display = '';
+    document.getElementById('explorer-hint').style.display = '';
+    detailsView.classList.remove('active');
+    goToShot(view === 'rear' ? S.REAR_SEATS : S.FRONT_CABIN);
+  }
+  setTimeout(notifyHeight, 120);
+}
+
+navBtns.forEach(btn => btn.addEventListener('click', () => showView(btn.dataset.view)));
 backBar.addEventListener('click', () => goToShot(previousShot));
 backBar.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') goToShot(previousShot); });
 document.getElementById('panel-close').addEventListener('click', closePanel);
@@ -725,7 +906,37 @@ window.addEventListener('load', notifyHeight);
 setTimeout(notifyHeight, 500);
 setTimeout(notifyHeight, 1500);
 
-goToShot(0);
+// Build Details accordion
+const acc = document.getElementById('acc');
+DETAILS.forEach((cat, i) => {
+  const item = document.createElement('div');
+  item.className = 'cm-acc__item';
+  const listHtml = cat.items.map(it => `<li>${it}</li>`).join('');
+  item.innerHTML = `
+    <button class="cm-acc__head" aria-expanded="false">
+      <span class="cm-acc__title">${cat.title}</span>
+      <span class="cm-acc__sign" aria-hidden="true"></span>
+    </button>
+    <div class="cm-acc__body"><ul class="cm-acc__list">${listHtml}</ul></div>`;
+  const head = item.querySelector('.cm-acc__head');
+  head.addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    // close all
+    acc.querySelectorAll('.cm-acc__item').forEach(x => {
+      x.classList.remove('open');
+      x.querySelector('.cm-acc__head').setAttribute('aria-expanded','false');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      head.setAttribute('aria-expanded','true');
+    }
+    setTimeout(notifyHeight, 520);
+  });
+  acc.appendChild(item);
+});
+
+// Init on Front Cabin
+goToShot(S.FRONT_CABIN);
 </script>
 </body>
 </html>
