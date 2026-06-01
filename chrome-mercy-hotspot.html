@@ -168,12 +168,19 @@
   .cm-hotspot {
     position: absolute;
     transform: translate(-50%, -50%);
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     z-index: 10;
+    /* invisible tap padding extends the touch target beyond the visible dot */
+    padding: 8px;
+    margin: -8px;
   }
-  @media (max-width: 600px) { .cm-hotspot { width: 44px; height: 44px; } }
+  .cm-hotspot__dot {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
 
   .cm-hotspot__pulse {
     position: absolute;
@@ -184,14 +191,14 @@
   }
   .cm-hotspot__core {
     position: absolute;
-    inset: 7px;
+    inset: 6px;
     border-radius: 50%;
     background: var(--green-vivid);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-body);
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
     color: #fff;
     border: none;
@@ -213,34 +220,40 @@
     60%       { transform: scale(1.6); opacity: 0; }
   }
 
-  /* Hover label */
-  .cm-hotspot__label {
-    position: absolute;
-    bottom: calc(100% + 10px);
-    left: 50%;
-    transform: translateX(-50%) translateY(4px);
-    background: rgba(0,0,0,0.9);
-    border: 1px solid var(--border-strong);
-    padding: 7px 13px;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    backdrop-filter: blur(8px);
-    z-index: 20;
-    font-family: var(--font-heading);
-    font-size: 14px;
-    font-style: italic;
-    color: var(--text-white);
-    line-height: 1.2;
-  }
-  .cm-hotspot:hover .cm-hotspot__label,
-  .cm-hotspot:focus-within .cm-hotspot__label {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-  @media (max-width: 600px) { .cm-hotspot__label { display: none; } }
 
+
+
+  /* Label strip — sits between image and panel; works on hover (desktop) and tap (mobile) */
+  .cm-label-strip {
+    background: #060e08;
+    border: 1px solid var(--border);
+    border-top: none;
+    border-bottom: none;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+  }
+  .cm-label-strip.show { max-height: 60px; opacity: 1; }
+  .cm-label-strip__inner {
+    padding: 13px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .cm-label-strip__mark {
+    width: 5px; height: 5px;
+    background: var(--green-vivid);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+  .cm-label-strip__text {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--text-white);
+    line-height: 1;
+  }
 
   /* Info Panel */
   .cm-panel {
@@ -400,6 +413,13 @@
 
   <div class="cm-viewer" id="viewer">
     <img class="cm-viewer__img" id="main-img" src="" alt="" />
+  </div>
+
+  <div class="cm-label-strip" id="label-strip">
+    <div class="cm-label-strip__inner">
+      <span class="cm-label-strip__mark"></span>
+      <span class="cm-label-strip__text" id="label-strip-text"></span>
+    </div>
   </div>
 
   <div class="cm-panel" id="info-panel" aria-live="polite">
@@ -587,6 +607,21 @@ const panelDesc = document.getElementById('panel-desc');
 const backBar   = document.getElementById('back-bar');
 const backLabel = document.getElementById('back-label');
 const navBtns   = document.querySelectorAll('.cm-nav__btn');
+const labelStrip     = document.getElementById('label-strip');
+const labelStripText = document.getElementById('label-strip-text');
+let   labelHideTimer = null;
+
+function showLabelStrip(text) {
+  clearTimeout(labelHideTimer);
+  labelStripText.textContent = text;
+  labelStrip.classList.add('show');
+  setTimeout(notifyHeight, 320);
+}
+function hideLabelStrip() {
+  labelStrip.classList.remove('show');
+  clearTimeout(labelHideTimer);
+  setTimeout(notifyHeight, 320);
+}
 
 function goToShot(idx, fromIdx) {
   const shot = SHOTS[idx];
@@ -613,9 +648,13 @@ function goToShot(idx, fromIdx) {
       ? SHOTS[hs.navigateTo].navLabel
       : ZONES[hs.zone].name;
     wrap.innerHTML = `
-      <div class="cm-hotspot__pulse"></div>
-      <button class="cm-hotspot__core" aria-label="${labelText}">${icon}</button>
-      <div class="cm-hotspot__label">${labelText}</div>`;
+      <div class="cm-hotspot__dot">
+        <div class="cm-hotspot__pulse"></div>
+        <button class="cm-hotspot__core" aria-label="${labelText}">${icon}</button>
+      </div>`;
+    // Hover (desktop) shows the name in the strip
+    wrap.addEventListener('mouseenter', () => showLabelStrip(labelText));
+    wrap.addEventListener('mouseleave', () => hideLabelStrip());
     wrap.querySelector('.cm-hotspot__core').addEventListener('click', () => handleHotspot(wrap, hs));
     viewer.appendChild(wrap);
   });
@@ -634,12 +673,15 @@ function goToShot(idx, fromIdx) {
     backBar.classList.remove('visible');
   }
 
+  hideLabelStrip();
   closePanel();
 }
 
 function handleHotspot(el, hs) {
   if (hs.type === 'navigate') {
-    goToShot(hs.navigateTo, currentShot);
+    const lbl = SHOTS[hs.navigateTo] ? SHOTS[hs.navigateTo].navLabel : '';
+    showLabelStrip(lbl);
+    setTimeout(() => { hideLabelStrip(); goToShot(hs.navigateTo, currentShot); }, 450);
     return;
   }
   const wasActive = el.classList.contains('active');
